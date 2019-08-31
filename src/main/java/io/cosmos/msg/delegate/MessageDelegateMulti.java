@@ -1,4 +1,4 @@
-package io.cosmos.delegate.sign.entity;
+package io.cosmos.msg.delegate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

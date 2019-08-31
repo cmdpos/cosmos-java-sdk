@@ -1,16 +1,7 @@
 package io.cosmos.msg;
 
-import io.cosmos.crypto.Crypto;
-import io.cosmos.delegate.sign.entity.*;
+import io.cosmos.msg.delegate.*;
 import io.cosmos.types.*;
-import io.cosmos.util.EncodeUtils;
-import org.bouncycastle.util.Strings;
-import org.bouncycastle.util.encoders.Base64;
-import org.bouncycastle.util.encoders.Hex;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 public class MsgRedelegate extends MsgDelegate {
     String validatorDstAddress;

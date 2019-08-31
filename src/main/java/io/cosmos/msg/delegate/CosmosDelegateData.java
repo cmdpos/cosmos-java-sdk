@@ -1,4 +1,4 @@
-package io.cosmos.delegate.sign.entity;
+package io.cosmos.msg.delegate;
 
 import io.cosmos.common.Utils;
 import io.cosmos.types.CosmosSignData;

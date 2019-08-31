@@ -9,6 +9,8 @@ import org.bouncycastle.util.encoders.Hex;
 
 public class MsgBase {
 
+    protected String restServerUrl = "http://localhost:1317";
+
     protected String sequenceNum;
     protected String accountNum;
     protected String pubKeyString;
@@ -28,7 +30,7 @@ public class MsgBase {
     }
 
     private String getAccountPrivate(String userAddress) {
-        String url = Constants.REST_URL + Constants.COSMOS_ACCOUNT_URL_PATH + userAddress;
+        String url = restServerUrl + Constants.COSMOS_ACCOUNT_URL_PATH + userAddress;
         System.out.println(url);
         return HttpUtils.httpGet(url);
     }
@@ -48,7 +50,7 @@ public class MsgBase {
         System.out.println(tx);
 
         System.out.println("Response:");
-        String res = HttpUtils.httpPost(Constants.REST_URL + Constants.TRANSACTION_URL_PATH, tx);
+        String res = HttpUtils.httpPost(restServerUrl + Constants.COSMOS_TRANSACTION_URL_PATH, tx);
         JSONObject result = JSON.parseObject(res);
 
         System.out.println(result);

@@ -1,7 +1,7 @@
 package io.cosmos.msg;
 
 import io.cosmos.crypto.Crypto;
-import io.cosmos.delegate.sign.entity.*;
+import io.cosmos.msg.delegate.*;
 import io.cosmos.types.*;
 import io.cosmos.util.EncodeUtils;
 import org.bouncycastle.util.Strings;

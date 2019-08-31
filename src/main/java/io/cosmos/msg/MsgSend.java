@@ -62,11 +62,9 @@ public class MsgSend extends MsgBase {
             System.out.println(signData.toJson());
             //序列化
             byte[] byteSignData = EncodeUtils.toJsonEncodeBytes(signData);
-//            System.out.println(EncodeUtils.bytesToHex(byteSignData));
 
             // sign
             byte[] sig = Crypto.sign(EncodeUtils.hexStringToByteArray(EncodeUtils.bytesToHex(byteSignData)), privateKey);
-//            System.out.println(EncodeUtils.bytesToHex(sig));
 
             String sigResult = Strings.fromByteArray(Base64.encode(sig));
 
