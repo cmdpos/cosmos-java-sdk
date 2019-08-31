@@ -1,1 +1,1 @@
-# cosmos-java-sdk
+cosmos java sdk
