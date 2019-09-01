@@ -16,6 +16,7 @@ public class MsgSend extends MsgBase {
         MsgSend msg = new MsgSend();
 
         msg.setMsgType("cosmos-sdk/MsgSend");
+        msg.setRestServerUrl("http://localhost:1317");
 
         msg.submit("stake",
                 "6",

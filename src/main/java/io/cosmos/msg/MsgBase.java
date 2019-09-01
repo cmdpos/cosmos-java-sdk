@@ -21,6 +21,10 @@ public class MsgBase {
         this.msgType = type;
     }
 
+    public void setRestServerUrl(String restServerUrl) {
+        this.restServerUrl = restServerUrl;
+    }
+
     void init(String privateKey) {
         pubKeyString = Hex.toHexString(Crypto.generatePubKeyFromPriv(privateKey));
         address = Crypto.generateAddressFromPriv(privateKey);
