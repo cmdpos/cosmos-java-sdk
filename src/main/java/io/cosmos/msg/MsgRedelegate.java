@@ -1,6 +1,7 @@
 package io.cosmos.msg;
 
-import io.cosmos.msg.delegate.*;
+import io.cosmos.msg.utils.*;
+import io.cosmos.msg.utils.type.MsgBeginRedelegateValue;
 import io.cosmos.types.*;
 
 public class MsgRedelegate extends MsgDelegate {
@@ -9,7 +10,7 @@ public class MsgRedelegate extends MsgDelegate {
         MsgRedelegate msg = new MsgRedelegate();
 
         msg.setMsgType("cosmos-sdk/MsgBeginRedelegate");
-        msg.setValidatorSrcAddress("cosmosvaloper1l25rrm7vrmzgqcplp5s7c8edeljxt78gmuqs0a");
+        msg.setValidatorSrcAddress("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083");
         msg.setValidatorDstAddress("cosmosvaloper1uhfa9260p3xhnac74wgx5er7tpltww78gxeac0");
 
         msg.submit("stake",

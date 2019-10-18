@@ -1,15 +1,8 @@
 package io.cosmos.msg;
 
-import io.cosmos.crypto.Crypto;
-import io.cosmos.msg.delegate.BoardcastTx;
-import io.cosmos.msg.delegate.Messages;
-import io.cosmos.msg.delegate.MsgDelegateValue;
-import io.cosmos.msg.delegate.TxValue;
+import io.cosmos.msg.utils.*;
+import io.cosmos.msg.utils.type.MsgSendValue;
 import io.cosmos.types.*;
-import io.cosmos.util.EncodeUtils;
-import org.bouncycastle.util.Strings;
-import org.bouncycastle.util.encoders.Base64;
-import org.bouncycastle.util.encoders.Hex;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,24 +42,12 @@ public class MsgSend extends MsgBase {
             amountList.add(amount);
 
             //组装待签名交易结构
-            TransferMessage transferMessage = newMsgSend(transferDenom, transferAmount, address, to);
-            Messages[] messages = newSendMsgs(transferDenom, transferAmount, address, to);
-
+            Messages[] messages = produceSendMsg(transferDenom, transferAmount, address, to);
             Fee fee = new Fee();
             fee.setAmount(amountList);
             fee.setGas(gas);
 
-            SignData signData = new SignData();
-            signData.setAccountNumber(accountNum);
-            signData.setChainId(chainId);
-            signData.setFee(fee);
-            signData.setMemo(memo);
-            signData.setMsgs(new TransferMessage[] {transferMessage});
-            signData.setSequence(sequenceNum);
-
-            System.out.println("Msg to be signed:");
-            System.out.println(signData.toJson());
-
+            Data2Sign signData = new Data2Sign(accountNum, chainId, fee, memo, messages, sequenceNum);
             List<Signature> signatureList = new ArrayList<>();
             Signature signature = MsgBase.sign(signData, privateKey);
             signatureList.add(signature);
@@ -75,12 +56,10 @@ public class MsgSend extends MsgBase {
             cosmosTransaction.setMode("block");
 
             TxValue cosmosTx = new TxValue();
-
             cosmosTx.setMsgs(messages);
             cosmosTx.setFee(fee);
             cosmosTx.setMemo(memo);
             cosmosTx.setSignatures(signatureList);
-
             cosmosTransaction.setTx(cosmosTx);
 
             boardcast(cosmosTransaction.toJson());
@@ -89,8 +68,7 @@ public class MsgSend extends MsgBase {
         }
     }
 
-
-    private Messages[] newSendMsgs(String denom, String amountDenom, String from, String to) {
+    private Messages[] produceSendMsg(String denom, String amountDenom, String from, String to) {
 
         List<Token> amountList = new ArrayList<>();
         Token amount = new Token();
@@ -98,37 +76,17 @@ public class MsgSend extends MsgBase {
         amount.setAmount(amountDenom);
         amountList.add(amount);
 
-        SendMessage value = new SendMessage();
+        MsgSendValue value = new MsgSendValue();
         value.setFromAddress(from);
         value.setToAddress(to);
         value.setAmount(amountList);
 
-        Messages<SendMessage> msg = new Messages<>();
-
+        Messages<MsgSendValue> msg = new Messages<>();
         msg.setType(msgType);
         msg.setValue(value);
         Messages[] msgs = new Messages[1];
-        msgs[0]=msg;
+        msgs[0] = msg;
         return msgs;
-    }
-
-    private TransferMessage newMsgSend(String denom, String amountDenom, String from, String to) {
-        TransferMessage transferMessage = new TransferMessage();
-
-        List<Token> amountList = new ArrayList<>();
-        Token amount = new Token();
-        amount.setDenom(denom);
-        amount.setAmount(amountDenom);
-        amountList.add(amount);
-
-        Value value = new Value();
-        value.setFromAddress(from);
-        value.setToAddress(to);
-        value.setAmount(amountList);
-
-        transferMessage.setType(this.msgType);
-        transferMessage.setValue(value);
-        return transferMessage;
     }
 
 }

@@ -1,4 +1,4 @@
-package io.cosmos.msg.delegate;
+package io.cosmos.msg.utils;
 
 import com.google.gson.annotations.SerializedName;
 import io.cosmos.types.Fee;

@@ -1,4 +1,4 @@
-package io.cosmos.msg.delegate;
+package io.cosmos.msg.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(alphabetic = true)
-public class SignDataDelegateMulti {
+public class Data2Sign {
     @JsonProperty("account_number")
     private String accountNumber;
     @JsonProperty("chain_id")
@@ -20,11 +20,11 @@ public class SignDataDelegateMulti {
     private Messages[] msgs;
     private String sequence;
 
-    public SignDataDelegateMulti() {
+    public Data2Sign() {
 
     }
 
-    public SignDataDelegateMulti(String accountNumber, String chainId, Fee fee, String memo, Messages[] msgs, String sequence) {
+    public Data2Sign(String accountNumber, String chainId, Fee fee, String memo, Messages[] msgs, String sequence) {
         this.accountNumber = accountNumber;
         this.chainId = chainId;
         this.fee = fee;

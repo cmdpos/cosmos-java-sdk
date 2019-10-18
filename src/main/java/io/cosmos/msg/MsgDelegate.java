@@ -1,12 +1,8 @@
 package io.cosmos.msg;
 
-import io.cosmos.crypto.Crypto;
-import io.cosmos.msg.delegate.*;
+import io.cosmos.msg.utils.*;
+import io.cosmos.msg.utils.type.MsgDelegateValue;
 import io.cosmos.types.*;
-import io.cosmos.util.EncodeUtils;
-import org.bouncycastle.util.Strings;
-import org.bouncycastle.util.encoders.Base64;
-import org.bouncycastle.util.encoders.Hex;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -62,7 +58,7 @@ public class MsgDelegate extends MsgBase {
                        String delegateAmount,
                        String privateKey) {
 
-        String memo = "cosmos delegate";
+        String memo = "cosmos utils";
         String mode ="block";
         String tranType = "auth/StdTx";
 
@@ -79,14 +75,10 @@ public class MsgDelegate extends MsgBase {
         //accountList
         CosmosAccount account = new CosmosAccount(address, accountNum, sequenceNum);
         List<CosmosAccount> accountList = Collections.singletonList(account);
-        //make signData
-        CosmosSignData cosmosSignData = new CosmosSignData(chainId, fee, memo, accountList);
-//
+
         Messages[] msgs = produceDelegateMsg(delegateDenom, delegateAmount);
 
         //整个json
-        CosmosTransaction cosmosTransaction = new CosmosTransaction();
-
         BoardcastTx cosmosDelegateData = new BoardcastTx();
         //memo
         cosmosDelegateData.setMode(mode);
@@ -96,10 +88,11 @@ public class MsgDelegate extends MsgBase {
         cosmosTx.setMemo(memo);
         cosmosTx.setFee(fee);
         cosmosTx.setMsgs(msgs);
+
         //make sign
+        CosmosSignData cosmosSignData = new CosmosSignData(chainId, fee, memo, accountList);
         List<Signature> signatures = makeSign(cosmosSignData, accountList, msgs, privateKey);
         cosmosTx.setSignatures(signatures);
-
 
         cosmosDelegateData.setTx(cosmosTx);
         boardcast(cosmosDelegateData.toJson());
@@ -114,7 +107,7 @@ public class MsgDelegate extends MsgBase {
             for (int i = 0; i < accountList.size(); i++) {
                 final CosmosAccount cosmosAccount = accountList.get(i);
 
-                SignDataDelegateMulti signData = new SignDataDelegateMulti(cosmosAccount.getAccountNumber(),
+                Data2Sign signData = new Data2Sign(cosmosAccount.getAccountNumber(),
                         cosmosSignData.getChainId(),
                         cosmosSignData.getFee(),
                         cosmosSignData.getMemo(),

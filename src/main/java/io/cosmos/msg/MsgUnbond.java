@@ -6,7 +6,7 @@ public class MsgUnbond extends MsgDelegate {
         MsgUnbond msg = new MsgUnbond();
 
         msg.setMsgType("cosmos-sdk/MsgUndelegate");
-        msg.setValidatorAddress("cosmosvaloper1uhfa9260p3xhnac74wgx5er7tpltww78gxeac0");
+        msg.setValidatorAddress("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083");
 
         msg.submit("stake",
                 "3",

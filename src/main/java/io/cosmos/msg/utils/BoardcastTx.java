@@ -1,7 +1,6 @@
-package io.cosmos.msg.delegate;
+package io.cosmos.msg.utils;
 
 import io.cosmos.common.Utils;
-import io.cosmos.types.CosmosSignData;
 
 
 public class BoardcastTx {
