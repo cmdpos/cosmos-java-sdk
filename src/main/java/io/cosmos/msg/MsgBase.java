@@ -5,6 +5,11 @@ import com.alibaba.fastjson.JSONObject;
 import io.cosmos.common.Constants;
 import io.cosmos.common.HttpUtils;
 import io.cosmos.crypto.Crypto;
+import io.cosmos.types.Pubkey;
+import io.cosmos.types.Signature;
+import io.cosmos.util.EncodeUtils;
+import org.bouncycastle.util.Strings;
+import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.util.encoders.Hex;
 
 public class MsgBase {
@@ -23,6 +28,36 @@ public class MsgBase {
 
     public void setRestServerUrl(String restServerUrl) {
         this.restServerUrl = restServerUrl;
+    }
+
+
+    static Signature sign(Object data, String privateKey) {
+        Signature signature = new Signature();
+
+        try {
+            //序列化
+            byte[] byteSignData = EncodeUtils.toJsonEncodeBytes(data);
+
+            // sign
+            byte[] sig = Crypto.sign(EncodeUtils.hexStringToByteArray(EncodeUtils.bytesToHex(byteSignData)), privateKey);
+
+            String sigResult = Strings.fromByteArray(Base64.encode(sig));
+            System.out.println("Signature:");
+            System.out.println(sigResult);
+
+            //组装签名结构
+            Pubkey pubkey = new Pubkey();
+            pubkey.setType("tendermint/PubKeySecp256k1");
+            String pubKeyString = Hex.toHexString(Crypto.generatePubKeyFromPriv(privateKey));
+            pubkey.setValue(Strings.fromByteArray(Base64.encode(Hex.decode(pubKeyString))));
+            signature.setPubkey(pubkey);
+            signature.setSignature(sigResult);
+
+        } catch (Exception e) {
+            System.out.println("serialize msg failed");
+        }
+
+        return signature;
     }
 
     void init(String privateKey) {

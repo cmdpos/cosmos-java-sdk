@@ -20,7 +20,7 @@ public class MsgDelegate extends MsgBase {
         MsgDelegate msg = new MsgDelegate();
 
         msg.setMsgType("cosmos-sdk/MsgDelegate");
-        msg.setValidatorAddress("cosmosvaloper1l25rrm7vrmzgqcplp5s7c8edeljxt78gmuqs0a");
+        msg.setValidatorAddress("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083");
 
         msg.submit("stake",
                 "3",
@@ -68,9 +68,6 @@ public class MsgDelegate extends MsgBase {
 
         init(privateKey);
 
-        byte[] priKeyVal = Hex.decode(privateKey);
-        byte[] pubKeyVal = Hex.decode(this.pubKeyString);
-
         //fee
         Token amount = new Token();
         amount.setDenom(feeDenom);
@@ -101,16 +98,17 @@ public class MsgDelegate extends MsgBase {
         delegateMulti.setFee(fee);
         delegateMulti.setMsgs(msgs);
         //make sign
-        List<Signature> signatures = makeSign(cosmosSignData,accountList,msgs,priKeyVal,pubKeyVal);
+        List<Signature> signatures = makeSign(cosmosSignData, accountList, msgs, privateKey);
         delegateMulti.setSignatures(signatures);
 
         boardcast(cosmosDelegateData.toJson());
     }
 
     //签名组装交易
-    protected static List<Signature> makeSign(CosmosSignData cosmosSignData,List<CosmosAccount> accountList ,
-                                           MessageDelegateMulti[] msgs,byte[] priKeyVal,byte[] pubKeyVal) {
-        List<Signature> signatures = new LinkedList<>();
+    protected static List<Signature> makeSign(CosmosSignData cosmosSignData,
+                                              List<CosmosAccount> accountList,
+                                              MessageDelegateMulti[] msgs, String priKeyVal) {
+        List<Signature> signatureList = new LinkedList<>();
         try {
             for (int i = 0; i < accountList.size(); i++) {
                 final CosmosAccount cosmosAccount = accountList.get(i);
@@ -121,24 +119,15 @@ public class MsgDelegate extends MsgBase {
                         cosmosSignData.getMemo(),
                         msgs,
                         cosmosAccount.getSequence());
-                //序列化
-                byte[] byteSignData = EncodeUtils.toJsonEncodeBytes(signData);
-                //签名
-                byte[] sig = Crypto.sign(EncodeUtils.hexStringToByteArray(EncodeUtils.bytesToHex(byteSignData)),
-                        Hex.toHexString(priKeyVal));
-                String sigResult = Strings.fromByteArray(Base64.encode(sig));
-                System.out.println("Sign result: " + sigResult);    //expected: /hRJwaM+SH0kLb8x9Uy4TnSeSlnyYzUGKaERQF1ABmMOXA56l7NhphVUISAeyQx06pMHbipaPq4gr6++SCVtpg==
-                Signature signature = new Signature();
-                Pubkey pubkey = new Pubkey(Strings.fromByteArray(Base64.encode(pubKeyVal)));
-                signature.setPubkey(pubkey);
-                signature.setSignature(sigResult);
-                signatures.add(signature);
+
+                Signature signature = MsgBase.sign(signData, priKeyVal);
+                signatureList.add(signature);
             }
         } catch (Exception e) {
             System.out.println( "sign failed!");
             System.out.println(e);
         }
-        return signatures;
+        return signatureList;
     }
 
 
