@@ -1,6 +1,10 @@
 package io.cosmos.msg;
 
 import io.cosmos.crypto.Crypto;
+import io.cosmos.msg.delegate.BoardcastTx;
+import io.cosmos.msg.delegate.Messages;
+import io.cosmos.msg.delegate.MsgDelegateValue;
+import io.cosmos.msg.delegate.TxValue;
 import io.cosmos.types.*;
 import io.cosmos.util.EncodeUtils;
 import org.bouncycastle.util.Strings;
@@ -46,6 +50,7 @@ public class MsgSend extends MsgBase {
 
             //组装待签名交易结构
             TransferMessage transferMessage = newMsgSend(transferDenom, transferAmount, address, to);
+            Messages[] messages = newSendMsgs(transferDenom, transferAmount, address, to);
 
             Fee fee = new Fee();
             fee.setAmount(amountList);
@@ -66,16 +71,17 @@ public class MsgSend extends MsgBase {
             Signature signature = MsgBase.sign(signData, privateKey);
             signatureList.add(signature);
 
-            //组装待广播交易结构
-            CosmosTransaction cosmosTransaction = new CosmosTransaction();
+            BoardcastTx cosmosTransaction = new BoardcastTx();
             cosmosTransaction.setMode("block");
-            CosmosValue cosmosValue = new CosmosValue();
-            cosmosValue.setMsgs(new TransferMessage[] {transferMessage});
-            cosmosValue.setFee(fee);
 
-            cosmosValue.setMemo(memo);
-            cosmosValue.setSignatures(signatureList);
-            cosmosTransaction.setTx(cosmosValue);
+            TxValue cosmosTx = new TxValue();
+
+            cosmosTx.setMsgs(messages);
+            cosmosTx.setFee(fee);
+            cosmosTx.setMemo(memo);
+            cosmosTx.setSignatures(signatureList);
+
+            cosmosTransaction.setTx(cosmosTx);
 
             boardcast(cosmosTransaction.toJson());
         } catch (Exception e) {
@@ -83,6 +89,28 @@ public class MsgSend extends MsgBase {
         }
     }
 
+
+    private Messages[] newSendMsgs(String denom, String amountDenom, String from, String to) {
+
+        List<Token> amountList = new ArrayList<>();
+        Token amount = new Token();
+        amount.setDenom(denom);
+        amount.setAmount(amountDenom);
+        amountList.add(amount);
+
+        SendMessage value = new SendMessage();
+        value.setFromAddress(from);
+        value.setToAddress(to);
+        value.setAmount(amountList);
+
+        Messages<SendMessage> msg = new Messages<>();
+
+        msg.setType(msgType);
+        msg.setValue(value);
+        Messages[] msgs = new Messages[1];
+        msgs[0]=msg;
+        return msgs;
+    }
 
     private TransferMessage newMsgSend(String denom, String amountDenom, String from, String to) {
         TransferMessage transferMessage = new TransferMessage();

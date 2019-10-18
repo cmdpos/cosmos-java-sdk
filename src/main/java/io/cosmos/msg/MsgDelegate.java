@@ -35,7 +35,7 @@ public class MsgDelegate extends MsgBase {
         this.validatorAddress = addr;
     }
 
-    protected MessageDelegateMulti[] produceDelegateMsg(String delegateDenom, String delegateAmount) {
+    protected Messages[] produceDelegateMsg(String delegateDenom, String delegateAmount) {
 
         MsgDelegateValue delegateValue = new MsgDelegateValue();
         delegateValue.setValidatorAddress(validatorAddress);
@@ -45,10 +45,10 @@ public class MsgDelegate extends MsgBase {
         token.setDenom(delegateDenom);
         token.setAmount(delegateAmount);
         delegateValue.setAmount(token);
-        MessageDelegateMulti<MsgDelegateValue> messageDelegateMulti = new MessageDelegateMulti<>();
+        Messages<MsgDelegateValue> messageDelegateMulti = new Messages<>();
         messageDelegateMulti.setType(msgType);
         messageDelegateMulti.setValue(delegateValue);
-        MessageDelegateMulti[] msgs = new MessageDelegateMulti[1];
+        Messages[] msgs = new Messages[1];
         msgs[0]=messageDelegateMulti;
         return msgs;
     }
@@ -81,33 +81,34 @@ public class MsgDelegate extends MsgBase {
         List<CosmosAccount> accountList = Collections.singletonList(account);
         //make signData
         CosmosSignData cosmosSignData = new CosmosSignData(chainId, fee, memo, accountList);
-
-        MessageDelegateMulti[] msgs = produceDelegateMsg(delegateDenom, delegateAmount);
+//
+        Messages[] msgs = produceDelegateMsg(delegateDenom, delegateAmount);
 
         //整个json
-        CosmosDelegateData cosmosDelegateData = new CosmosDelegateData();
-        //signData
-        cosmosDelegateData.setSignData(cosmosSignData);
+        CosmosTransaction cosmosTransaction = new CosmosTransaction();
+
+        BoardcastTx cosmosDelegateData = new BoardcastTx();
         //memo
         cosmosDelegateData.setMode(mode);
         //tx
-        CosmosDelegateMulti delegateMulti = new CosmosDelegateMulti();
-        cosmosDelegateData.setTx(delegateMulti);
-        delegateMulti.setType(tranType);
-        delegateMulti.setMemo(memo);
-        delegateMulti.setFee(fee);
-        delegateMulti.setMsgs(msgs);
+        TxValue cosmosTx = new TxValue();
+        cosmosTx.setType(tranType);
+        cosmosTx.setMemo(memo);
+        cosmosTx.setFee(fee);
+        cosmosTx.setMsgs(msgs);
         //make sign
         List<Signature> signatures = makeSign(cosmosSignData, accountList, msgs, privateKey);
-        delegateMulti.setSignatures(signatures);
+        cosmosTx.setSignatures(signatures);
 
+
+        cosmosDelegateData.setTx(cosmosTx);
         boardcast(cosmosDelegateData.toJson());
     }
 
     //签名组装交易
     protected static List<Signature> makeSign(CosmosSignData cosmosSignData,
                                               List<CosmosAccount> accountList,
-                                              MessageDelegateMulti[] msgs, String priKeyVal) {
+                                              Messages[] msgs, String priKeyVal) {
         List<Signature> signatureList = new LinkedList<>();
         try {
             for (int i = 0; i < accountList.size(); i++) {

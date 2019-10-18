@@ -7,10 +7,10 @@ import io.cosmos.types.Signature;
 import java.util.List;
 
 
-public class CosmosDelegateMulti {
+public class TxValue {
 
     @SerializedName("msg")
-    private MessageDelegateMulti[] msgs;
+    private Messages[] msgs;
 
     private Fee fee;
 
@@ -20,11 +20,11 @@ public class CosmosDelegateMulti {
 
     private  String type;
 
-    public MessageDelegateMulti[] getMsgs() {
+    public Messages[] getMsgs() {
         return msgs;
     }
 
-    public void setMsgs(MessageDelegateMulti[] msgs) {
+    public void setMsgs(Messages[] msgs) {
         this.msgs = msgs;
     }
 

@@ -28,7 +28,7 @@ public class MsgRedelegate extends MsgDelegate {
         this.setValidatorAddress(addr);
     }
 
-    protected MessageDelegateMulti[] produceDelegateMsg(String delegateDenom, String delegateAmount) {
+    protected Messages[] produceDelegateMsg(String delegateDenom, String delegateAmount) {
         //make tx.msg
         MsgBeginRedelegateValue delegateValue = new MsgBeginRedelegateValue();
         delegateValue.setValidatorSrcAddress(validatorAddress);
@@ -38,10 +38,10 @@ public class MsgRedelegate extends MsgDelegate {
         token.setDenom(delegateDenom);
         token.setAmount(delegateAmount);
         delegateValue.setAmount(token);
-        MessageDelegateMulti<MsgBeginRedelegateValue> messageDelegateMulti = new MessageDelegateMulti<>();
+        Messages<MsgBeginRedelegateValue> messageDelegateMulti = new Messages<>();
         messageDelegateMulti.setType(msgType);
         messageDelegateMulti.setValue(delegateValue);
-        MessageDelegateMulti[] msgs = new MessageDelegateMulti[1];
+        Messages[] msgs = new Messages[1];
         msgs[0] = messageDelegateMulti;
         return msgs;
     }

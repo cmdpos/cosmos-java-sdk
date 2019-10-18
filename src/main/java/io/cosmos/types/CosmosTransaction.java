@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 public class CosmosTransaction {
 
-    private String type;
     private String mode;
 
     private CosmosValue tx;
@@ -18,18 +17,9 @@ public class CosmosTransaction {
 
     }
     public CosmosTransaction(String type, CosmosValue tx, String mode) {
-        this.type = type;
         this.tx = tx;
         this.mode = mode;
     }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-    public String getType() {
-        return type;
-    }
-
 
     public void setMode(String mode) {
         this.mode = mode;

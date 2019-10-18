@@ -8,13 +8,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(alphabetic = true)
-public class MessageDelegateMulti<T> {
+public class Messages<T> {
 
-    public MessageDelegateMulti() {
+    public Messages() {
 
     }
 
-    public MessageDelegateMulti(String type, T value) {
+    public Messages(String type, T value) {
         this.type = type;
         this.value = value;
     }

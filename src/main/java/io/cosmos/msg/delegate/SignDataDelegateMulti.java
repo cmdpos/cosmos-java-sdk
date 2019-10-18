@@ -17,14 +17,14 @@ public class SignDataDelegateMulti {
     private String chainId;
     private Fee fee;
     private String memo;
-    private MessageDelegateMulti[] msgs;
+    private Messages[] msgs;
     private String sequence;
 
     public SignDataDelegateMulti() {
 
     }
 
-    public SignDataDelegateMulti(String accountNumber, String chainId, Fee fee, String memo, MessageDelegateMulti[] msgs, String sequence) {
+    public SignDataDelegateMulti(String accountNumber, String chainId, Fee fee, String memo, Messages[] msgs, String sequence) {
         this.accountNumber = accountNumber;
         this.chainId = chainId;
         this.fee = fee;
@@ -65,11 +65,11 @@ public class SignDataDelegateMulti {
         this.memo = memo;
     }
 
-    public MessageDelegateMulti[] getMsgs() {
+    public Messages[] getMsgs() {
         return msgs;
     }
 
-    public void setMsgs(MessageDelegateMulti[] msgs) {
+    public void setMsgs(Messages[] msgs) {
         this.msgs = msgs;
     }
 
