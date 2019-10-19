@@ -6,11 +6,10 @@ import io.cosmos.types.Signature;
 
 import java.util.List;
 
-
 public class TxValue {
 
     @SerializedName("msg")
-    private Messages[] msgs;
+    private Message[] msgs;
 
     private Fee fee;
 
@@ -20,11 +19,11 @@ public class TxValue {
 
     private  String type;
 
-    public Messages[] getMsgs() {
+    public Message[] getMsgs() {
         return msgs;
     }
 
-    public void setMsgs(Messages[] msgs) {
+    public void setMsgs(Message[] msgs) {
         this.msgs = msgs;
     }
 

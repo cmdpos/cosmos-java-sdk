@@ -1,35 +1,30 @@
-package io.cosmos.types.transferMulti;
-
+package io.cosmos.msg.utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.cosmos.types.ValueMulti;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.List;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(alphabetic = true)
-public class TransferMessageMulti{
+public class Message<T> {
 
-    public TransferMessageMulti() {
-
+    public Message() {
     }
 
-    public TransferMessageMulti(String type, ValueMulti value) {
+    public Message(String type, T value) {
         this.type = type;
         this.value = value;
     }
 
     private String type;
 
-    private ValueMulti value;
+    private T value;
 
     public String getType() {
         return type;
     }
 
-    public void setValue(ValueMulti value) {
+    public void setValue(T value) {
         this.value = value;
     }
 
@@ -37,7 +32,7 @@ public class TransferMessageMulti{
         this.type = type;
     }
 
-    public ValueMulti getValue() {
+    public T getValue() {
         return value;
     }
 

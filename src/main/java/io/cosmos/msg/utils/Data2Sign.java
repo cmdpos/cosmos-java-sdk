@@ -17,14 +17,14 @@ public class Data2Sign {
     private String chainId;
     private Fee fee;
     private String memo;
-    private Messages[] msgs;
+    private Message[] msgs;
     private String sequence;
 
     public Data2Sign() {
 
     }
 
-    public Data2Sign(String accountNumber, String chainId, Fee fee, String memo, Messages[] msgs, String sequence) {
+    public Data2Sign(String accountNumber, String chainId, Fee fee, String memo, Message[] msgs, String sequence) {
         this.accountNumber = accountNumber;
         this.chainId = chainId;
         this.fee = fee;
@@ -65,11 +65,11 @@ public class Data2Sign {
         this.memo = memo;
     }
 
-    public Messages[] getMsgs() {
+    public Message[] getMsgs() {
         return msgs;
     }
 
-    public void setMsgs(Messages[] msgs) {
+    public void setMsgs(Message[] msgs) {
         this.msgs = msgs;
     }
 

@@ -5,12 +5,21 @@ import com.alibaba.fastjson.JSONObject;
 import io.cosmos.common.Constants;
 import io.cosmos.common.HttpUtils;
 import io.cosmos.crypto.Crypto;
+import io.cosmos.msg.utils.BoardcastTx;
+import io.cosmos.msg.utils.Data2Sign;
+import io.cosmos.msg.utils.Message;
+import io.cosmos.msg.utils.TxValue;
+import io.cosmos.types.Fee;
 import io.cosmos.types.Pubkey;
 import io.cosmos.types.Signature;
+import io.cosmos.types.Token;
 import io.cosmos.util.EncodeUtils;
 import org.bouncycastle.util.Strings;
 import org.bouncycastle.util.encoders.Base64;
 import org.bouncycastle.util.encoders.Hex;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MsgBase {
 
@@ -20,7 +29,9 @@ public class MsgBase {
     protected String accountNum;
     protected String pubKeyString;
     protected String address;
-    protected String msgType;
+    protected String priKeyString;
+
+    static protected String msgType;
 
     public void setMsgType(String type) {
         this.msgType = type;
@@ -42,8 +53,6 @@ public class MsgBase {
             byte[] sig = Crypto.sign(EncodeUtils.hexStringToByteArray(EncodeUtils.bytesToHex(byteSignData)), privateKey);
 
             String sigResult = Strings.fromByteArray(Base64.encode(sig));
-            System.out.println("Signature:");
-            System.out.println(sigResult);
 
             //组装签名结构
             Pubkey pubkey = new Pubkey();
@@ -60,12 +69,19 @@ public class MsgBase {
         return signature;
     }
 
+
+    void initMnemonic(String mnemonic) {
+        String prikey = Crypto.generatePrivateKeyFromMnemonic(mnemonic);
+        init(prikey);
+    }
+
     void init(String privateKey) {
         pubKeyString = Hex.toHexString(Crypto.generatePubKeyFromPriv(privateKey));
         address = Crypto.generateAddressFromPriv(privateKey);
         JSONObject accountJson = JSON.parseObject(getAccountPrivate(address));
         sequenceNum = getSequance(accountJson);
         accountNum = getAccountNumber(accountJson);
+        priKeyString = privateKey;
     }
 
     private String getAccountPrivate(String userAddress) {
@@ -93,6 +109,52 @@ public class MsgBase {
         JSONObject result = JSON.parseObject(res);
 
         System.out.println(result);
+        System.out.println("------------------------------------------------------");
         return result;
+    }
+
+
+    public void submit(Message message,
+                       String feeDenom,
+                       String feeAmount,
+                       String gas,
+                       String chainId,
+                       String memo) {
+        try {
+            List<Token> amountList = new ArrayList<>();
+            Token amount = new Token();
+            amount.setDenom(feeDenom);
+            amount.setAmount(feeAmount);
+            amountList.add(amount);
+
+            //组装待签名交易结构
+            Fee fee = new Fee();
+            fee.setAmount(amountList);
+            fee.setGas(gas);
+
+
+            Message[] msgs = new Message[1];
+            msgs[0] = message;
+
+            Data2Sign signData = new Data2Sign(accountNum, chainId, fee, memo, msgs, sequenceNum);
+            List<Signature> signatureList = new ArrayList<>();
+            Signature signature = MsgBase.sign(signData, priKeyString);
+            signatureList.add(signature);
+
+            BoardcastTx cosmosTransaction = new BoardcastTx();
+            cosmosTransaction.setMode("block");
+
+            TxValue cosmosTx = new TxValue();
+            cosmosTx.setType("auth/StdTx");
+            cosmosTx.setMsgs(msgs);
+            cosmosTx.setFee(fee);
+            cosmosTx.setMemo(memo);
+            cosmosTx.setSignatures(signatureList);
+            cosmosTransaction.setTx(cosmosTx);
+
+            boardcast(cosmosTransaction.toJson());
+        } catch (Exception e) {
+            System.out.println("serialize transfer msg failed");
+        }
     }
 }
