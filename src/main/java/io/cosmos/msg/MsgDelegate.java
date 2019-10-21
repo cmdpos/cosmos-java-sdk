@@ -20,14 +20,14 @@ public class MsgDelegate extends MsgBase {
         MsgDelegate msg = new MsgDelegate();
 
         msg.setMsgType("cosmos-sdk/MsgDelegate");
-        msg.setValidatorAddress("cosmosvaloper1l25rrm7vrmzgqcplp5s7c8edeljxt78gmuqs0a");
+        msg.setValidatorAddress("cosmosvaloper14tdm50scshf7d79zt8xgchev2cxkmlq5xtap80");
 
         msg.submit("stake",
                 "3",
                 "200000",
                 "testchain",
                 "stake",
-                "100",
+                "100000",
                 "2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
     }
 
