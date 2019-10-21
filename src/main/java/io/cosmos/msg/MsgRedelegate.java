@@ -9,8 +9,8 @@ public class MsgRedelegate extends MsgDelegate {
         MsgRedelegate msg = new MsgRedelegate();
 
         msg.setMsgType("cosmos-sdk/MsgBeginRedelegate");
-        msg.setValidatorSrcAddress("cosmosvaloper1l25rrm7vrmzgqcplp5s7c8edeljxt78gmuqs0a");
-        msg.setValidatorDstAddress("cosmosvaloper1uhfa9260p3xhnac74wgx5er7tpltww78gxeac0");
+        msg.setValidatorSrcAddress("cosmosvaloper1az394pclywqpaktrnrlpfjal30d9re36gstk8d");
+        msg.setValidatorDstAddress("cosmosvaloper14tdm50scshf7d79zt8xgchev2cxkmlq5xtap80");
 
         msg.submit("stake",
                 "3",
