@@ -9,8 +9,7 @@ public class MsgWithdrawValidatorCommission extends MsgBase {
     public static void main(String[] args) {
         MsgWithdrawValidatorCommission msg = new MsgWithdrawValidatorCommission();
         msg.setMsgType("cosmos-sdk/MsgWithdrawValidatorCommission");
-        String mnemonic = "one neither they audit pen exile fire smart tongue express blanket burden culture shove curve address together pottery suggest lady sell clap seek whisper";
-        msg.initMnemonic(mnemonic);
+        msg.init("571af5d4eaf9a54f50110123979e5c1d461b7a1f2f48322da775621187cd0cc1");
 
         Message messages = msg.produceMsg("cosmosvaloper1az394pclywqpaktrnrlpfjal30d9re36gstk8d");
 

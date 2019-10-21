@@ -70,6 +70,8 @@ public class CryptoTest {
                         "culture shove curve address together pottery " +
                         "suggest lady sell clap seek whisper";
 
+        mnemonic = "one neither they audit pen exile fire smart tongue express blanket burden culture shove curve address together pottery suggest lady sell clap seek whisper";
+
         String prikey = Crypto.generatePrivateKeyFromMnemonic(mnemonic);
 
         System.out.println("mnemonic");
