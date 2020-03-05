@@ -9,7 +9,7 @@ import org.bouncycastle.util.encoders.Hex;
 
 public class MsgBase {
 
-    protected String restServerUrl = "http://localhost:1317";
+    protected String restServerUrl = "https://stargate.evaio.net";
 
     protected String sequenceNum;
     protected String accountNum;
@@ -28,6 +28,8 @@ public class MsgBase {
     void init(String privateKey) {
         pubKeyString = Hex.toHexString(Crypto.generatePubKeyFromPriv(privateKey));
         address = Crypto.generateAddressFromPriv(privateKey);
+        System.out.println(address);
+
         JSONObject accountJson = JSON.parseObject(getAccountPrivate(address));
         sequenceNum = getSequance(accountJson);
         accountNum = getAccountNumber(accountJson);

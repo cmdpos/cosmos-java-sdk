@@ -16,17 +16,19 @@ public class MsgSend extends MsgBase {
         MsgSend msg = new MsgSend();
 
         msg.setMsgType("cosmos-sdk/MsgSend");
-        msg.setRestServerUrl("http://localhost:1317");
+//        msg.setRestServerUrl("http://localhost:1317");
 
-        msg.submit("stake",
+        msg.submit("neva",
                 "6",
                 "200000",
-                "testchain",
-                "stake",
+                "evaio",
+                "neva",
                 "16",
-                "cosmos1geyy4wtak2q9effnfhze9u4htd8yxxmagdw3q0",
+                "eva1pn80qt83wzk9w4gs3muc8hw26cexlgav75mar0",
                 "cosmos transfer",
-                "2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+                "6dd0081f36e66121e8140ff85648d28dc0e01cb337a15a6f965e742b815ffdac"
+//                "9357d721b9bec0c5c0983763428222c8ce4413e14a97b2c7c6ff121809cf67ab"
+        );
     }
 
     public void submit(String feeDenom, String feeAmount, String gas,

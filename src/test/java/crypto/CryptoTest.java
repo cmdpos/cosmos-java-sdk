@@ -65,13 +65,12 @@ public class CryptoTest {
     @Test
     public void generatePrivateKeyFromMnemonic() {
         String mnemonic =
-                "depart neither they audit pen exile " +
-                        "fire smart tongue express blanket burden " +
-                        "culture shove curve address together pottery " +
-                        "suggest lady sell clap seek whisper";
+                "favorite ramp toe boss wine ready april possible kite insect derive wisdom";
 
+        mnemonic = "fire divide pepper letter grunt impose jar hawk keep raw solar acquire analyst slogan place faint garage leave stool century myself problem unaware ecology";
         String prikey = Crypto.generatePrivateKeyFromMnemonic(mnemonic);
 
+//        prikey = "6dd0081f36e66121e8140ff85648d28dc0e01cb337a15a6f965e742b815ffdac";
         System.out.println("mnemonic");
         System.out.println(mnemonic);
 
