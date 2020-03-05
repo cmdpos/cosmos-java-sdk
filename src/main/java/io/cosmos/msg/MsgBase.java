@@ -23,7 +23,8 @@ import java.util.List;
 
 public class MsgBase {
 
-    protected String restServerUrl = "http://localhost:1317";
+//    protected String restServerUrl = "http://localhost:1317";
+    protected String restServerUrl = "https://stargate.evaio.net";
 
     protected String sequenceNum;
     protected String accountNum;
