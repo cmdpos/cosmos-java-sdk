@@ -15,10 +15,8 @@ public class MsgDelegate extends MsgBase {
         Message message = msg.produceDelegateMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083", "stake", "100");
 
         msg.submit(message,
-                "stake",
                 "3",
                 "200000",
-                "testchain",
                 "Delegate memo");
     }
 

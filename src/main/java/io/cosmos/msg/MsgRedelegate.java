@@ -16,10 +16,8 @@ public class MsgRedelegate extends MsgDelegate {
                 "stake", "100");
 
         msg.submit(messages,
-                "stake",
                 "3",
                 "200000",
-                "testchain",
                 "Delegate memo");
     }
 

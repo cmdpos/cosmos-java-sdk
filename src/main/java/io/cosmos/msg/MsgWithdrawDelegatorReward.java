@@ -14,10 +14,8 @@ public class MsgWithdrawDelegatorReward extends MsgBase {
         Message messages = msg.produceMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083");
 
         msg.submit(messages,
-                "stake",
                 "6",
                 "200000",
-                "testchain",
                 "cosmos set withdrawAddr");
     }
 

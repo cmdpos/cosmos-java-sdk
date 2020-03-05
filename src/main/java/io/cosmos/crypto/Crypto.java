@@ -2,6 +2,7 @@ package io.cosmos.crypto;
 
 import com.google.common.base.Splitter;
 import io.cosmos.common.Constants;
+import io.cosmos.common.EnvInstance;
 import io.cosmos.util.AddressUtil;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
@@ -103,7 +104,7 @@ public class Crypto {
 
     public static String generateAddressFromPub(String pubKey) {
         try {
-            String addr = AddressUtil.createNewAddressSecp256k1(Constants.COSMOS_MAIN_PREFIX, Hex.decode(pubKey));
+            String addr = AddressUtil.createNewAddressSecp256k1(EnvInstance.env.GetMainPrefix(), Hex.decode(pubKey));
             return addr;
         } catch (Exception e) {
             e.printStackTrace();

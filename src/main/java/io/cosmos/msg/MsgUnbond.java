@@ -13,10 +13,8 @@ public class MsgUnbond extends MsgDelegate {
                 "stake", "100");
 
         msg.submit(messages,
-                "stake",
                 "3",
                 "200000",
-                "testchain",
                 "Delegate memo");
     }
 

@@ -1,6 +1,7 @@
 package crypto;
 
 import io.cosmos.common.Constants;
+import io.cosmos.common.EnvInstance;
 import io.cosmos.crypto.Crypto;
 import io.cosmos.util.AddressUtil;
 import org.bouncycastle.util.encoders.Hex;
@@ -30,7 +31,7 @@ public class CryptoTest {
         System.out.println("pubkey");
         System.out.println(Hex.toHexString(pub));
         try {
-            String addr = AddressUtil.createNewAddressSecp256k1(Constants.COSMOS_MAIN_PREFIX, pub);
+            String addr = AddressUtil.createNewAddressSecp256k1(EnvInstance.env.GetMainPrefix(), pub);
             System.out.println(addr);
         }catch (Exception e){
             e.printStackTrace();

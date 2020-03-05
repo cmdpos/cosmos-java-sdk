@@ -14,10 +14,8 @@ public class MsgSetWithdrawAddress extends MsgBase {
         Message messages = msg.produceMsg("cosmos1hg40dv5e237qy28vtyum52ygke32ez35hm307h");
 
         msg.submit(messages,
-                "stake",
                 "6",
                 "200000",
-                "testchain",
                 "cosmos set withdrawAddr");
     }
 

@@ -19,27 +19,11 @@ public class MsgSend extends MsgBase {
                 "eva1pn80qt83wzk9w4gs3muc8hw26cexlgav75mar0");
 
         msg.submit(messages,
-                "neva",
                 "6",
                 "200000",
-                "evaio",
                 "cosmos transfer");
     }
 
-//        msg.setRestServerUrl("http://localhost:1317");
-//
-//        msg.submit("neva",
-//                "6",
-//                "200000",
-//                "evaio",
-//                "neva",
-//                "16",
-//                "eva1pn80qt83wzk9w4gs3muc8hw26cexlgav75mar0",
-//                "cosmos transfer",
-//                "6dd0081f36e66121e8140ff85648d28dc0e01cb337a15a6f965e742b815ffdac"
-////                "9357d721b9bec0c5c0983763428222c8ce4413e14a97b2c7c6ff121809cf67ab"
-//                );
-//}
     public Message produceSendMsg(String denom, String amountDenom, String to) {
 
         List<Token> amountList = new ArrayList<>();

@@ -3,6 +3,7 @@ package io.cosmos.msg;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.cosmos.common.Constants;
+import io.cosmos.common.EnvInstance;
 import io.cosmos.common.HttpUtils;
 import io.cosmos.crypto.Crypto;
 import io.cosmos.msg.utils.BoardcastTx;
@@ -116,15 +117,13 @@ public class MsgBase {
 
 
     public void submit(Message message,
-                       String feeDenom,
                        String feeAmount,
                        String gas,
-                       String chainId,
                        String memo) {
         try {
             List<Token> amountList = new ArrayList<>();
             Token amount = new Token();
-            amount.setDenom(feeDenom);
+            amount.setDenom(EnvInstance.env.GetDenom());
             amount.setAmount(feeAmount);
             amountList.add(amount);
 
@@ -137,7 +136,7 @@ public class MsgBase {
             Message[] msgs = new Message[1];
             msgs[0] = message;
 
-            Data2Sign signData = new Data2Sign(accountNum, chainId, fee, memo, msgs, sequenceNum);
+            Data2Sign signData = new Data2Sign(accountNum, EnvInstance.env.GetChainid(), fee, memo, msgs, sequenceNum);
             List<Signature> signatureList = new ArrayList<>();
             Signature signature = MsgBase.sign(signData, priKeyString);
             signatureList.add(signature);

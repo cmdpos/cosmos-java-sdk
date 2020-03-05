@@ -42,7 +42,7 @@ public class RunAll {
                 "16",
                 "cosmos1geyy4wtak2q9effnfhze9u4htd8yxxmagdw3q0");
 
-        msg.submit(messages, "stake", "6", "200000", "testchain", "cosmos transfer");
+        msg.submit(messages, "6", "200000", "cosmos transfer");
     }
 
     static void RunMsgDelegate() {
@@ -53,7 +53,7 @@ public class RunAll {
 
         Message message = msg.produceDelegateMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083", "stake", "100");
 
-        msg.submit(message, "stake", "3", "200000", "testchain", "Delegate memo");
+        msg.submit(message, "3", "200000", "Delegate memo");
     }
 
     static void RunMsgRedelegate() {
@@ -67,10 +67,8 @@ public class RunAll {
                 "stake", "100");
 
         msg.submit(messages,
-                "stake",
                 "3",
                 "200000",
-                "testchain",
                 "Delegate memo");
     }
 
@@ -84,10 +82,8 @@ public class RunAll {
                 "stake", "100");
 
         msg.submit(messages,
-                "stake",
                 "3",
                 "200000",
-                "testchain",
                 "Delegate memo");
     }
 
@@ -100,10 +96,8 @@ public class RunAll {
         Message messages = msg.produceMsg("cosmos1hg40dv5e237qy28vtyum52ygke32ez35hm307h");
 
         msg.submit(messages,
-                "stake",
                 "6",
                 "200000",
-                "testchain",
                 "cosmos set withdrawAddr");
     }
 
@@ -116,10 +110,8 @@ public class RunAll {
         Message messages = msg.produceMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083");
 
         msg.submit(messages,
-                "stake",
                 "6",
                 "200000",
-                "testchain",
                 "cosmos set withdrawAddr");
     }
 
@@ -133,10 +125,8 @@ public class RunAll {
         Message messages = msg.produceMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083");
 
         msg.submit(messages,
-                "stake",
                 "6",
                 "200000",
-                "testchain",
                 "cosmos withdraw");
     }
 }
