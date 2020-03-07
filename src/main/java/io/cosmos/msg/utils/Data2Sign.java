@@ -16,6 +16,7 @@ public class Data2Sign {
     @SerializedName("account_number")
     private String accountNumber;
     @JsonProperty("chain_id")
+    @SerializedName("chain_id")
     private String chainId;
     private Fee fee;
     private String memo;

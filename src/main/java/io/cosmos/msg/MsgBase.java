@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.cosmos.common.Constants;
 import io.cosmos.common.HttpUtils;
+import io.cosmos.common.Utils;
 import io.cosmos.crypto.Crypto;
 import io.cosmos.msg.utils.BoardcastTx;
 import io.cosmos.msg.utils.Data2Sign;
@@ -44,8 +45,8 @@ public class MsgBase {
 
         try {
 
-            String sigResult = obj2byte(data, privateKey);
-            sigResult = obj2byteok(data, privateKey);
+            String sigResult = obj2byteok(data, privateKey);
+            sigResult = obj2byte(data, privateKey);
 
             //组装签名结构
             Pubkey pubkey = new Pubkey();
@@ -65,14 +66,15 @@ public class MsgBase {
 
     static String obj2byte(Data2Sign data, String privateKey) {
 
-        String signDataJson = JSONObject.toJSONString(data);
         String sigResult = null;
         try {
-            System.out.println("===============JSONObject.toJSONString=================");
+            System.out.println("===============Utils.serializer.toJson=================");
 
             System.out.println("row data:");
             System.out.println(data);
             System.out.println("json data:");
+
+            String signDataJson = Utils.serializer.toJson(data);
             System.out.println(signDataJson);
 
             //序列化
