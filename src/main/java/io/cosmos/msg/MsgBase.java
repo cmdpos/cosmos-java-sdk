@@ -43,13 +43,9 @@ public class MsgBase {
         Signature signature = new Signature();
 
         try {
-            //序列化
-            byte[] byteSignData = EncodeUtils.toJsonEncodeBytes(data);
 
-            // sign
-            byte[] sig = Crypto.sign(EncodeUtils.hexStringToByteArray(EncodeUtils.bytesToHex(byteSignData)), privateKey);
-
-            String sigResult = Strings.fromByteArray(Base64.encode(sig));
+            String sigResult = obj2byte(data, privateKey);
+            sigResult = obj2byteok(data, privateKey);
 
             //组装签名结构
             Pubkey pubkey = new Pubkey();
@@ -66,36 +62,69 @@ public class MsgBase {
         return signature;
     }
 
-    static Signature sign2(Data2Sign data, String privateKey) {
-        Signature signature = new Signature();
 
+    static String obj2byte(Data2Sign data, String privateKey) {
+
+        String signDataJson = JSONObject.toJSONString(data);
+        String sigResult = null;
         try {
+            System.out.println("===============JSONObject.toJSONString=================");
 
-            String signDataJson = JSONObject.toJSONString(data);
+            System.out.println("row data:");
+            System.out.println(data);
+            System.out.println("json data:");
+            System.out.println(signDataJson);
 
             //序列化
             byte[] byteSignData = signDataJson.getBytes();
 
-            // sign
+            System.out.println("byte data length:");
+            System.out.println(byteSignData.length);
+
+
             byte[] sig = Crypto.sign(byteSignData, privateKey);
+            sigResult = Strings.fromByteArray(Base64.encode(sig));
 
-            String sigResult = Strings.fromByteArray(Base64.encode(sig));
+            System.out.println("result:");
+            System.out.println(sigResult);
+            System.out.println("================================");
 
-            //组装签名结构
-            Pubkey pubkey = new Pubkey();
-            pubkey.setType("tendermint/PubKeySecp256k1");
-            String pubKeyString = Hex.toHexString(Crypto.generatePubKeyFromPriv(privateKey));
-            pubkey.setValue(Strings.fromByteArray(Base64.encode(Hex.decode(pubKeyString))));
-            signature.setPubkey(pubkey);
-            signature.setSignature(sigResult);
+        } catch (Exception e) {
+            System.out.println("serialize msg failed");
+        }
+        return sigResult;
+    }
+
+    static String obj2byteok(Data2Sign data, String privateKey) {
+        byte[] byteSignData = null;
+        String sigResult = null;
+        try {
+
+            System.out.println("===============EncodeUtils=================");
+            System.out.println("row data:");
+            System.out.println(data);
+            System.out.println("json data:");
+            System.out.println(EncodeUtils.toJsonStringSortKeys(data));
+
+            byte[] tmp = EncodeUtils.toJsonEncodeBytes(data);
+            byteSignData = EncodeUtils.hexStringToByteArray(EncodeUtils.bytesToHex(tmp));
+
+            System.out.println("byte data length:");
+            System.out.println(byteSignData.length);
+
+            byte[] sig = Crypto.sign(byteSignData, privateKey);
+            sigResult = Strings.fromByteArray(Base64.encode(sig));
+
+            System.out.println("result:");
+            System.out.println(sigResult);
+            System.out.println("================================");
 
         } catch (Exception e) {
             System.out.println("serialize msg failed");
         }
 
-        return signature;
+        return sigResult;
     }
-
 
     void initMnemonic(String mnemonic) {
         String prikey = Crypto.generatePrivateKeyFromMnemonic(mnemonic);

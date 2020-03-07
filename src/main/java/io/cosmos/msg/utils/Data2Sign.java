@@ -3,6 +3,7 @@ package io.cosmos.msg.utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.SerializedName;
 import io.cosmos.types.Fee;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -12,6 +13,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @JsonPropertyOrder(alphabetic = true)
 public class Data2Sign {
     @JsonProperty("account_number")
+    @SerializedName("account_number")
     private String accountNumber;
     @JsonProperty("chain_id")
     private String chainId;
