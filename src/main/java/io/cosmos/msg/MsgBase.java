@@ -23,8 +23,9 @@ import java.util.List;
 
 public class MsgBase {
 
-//    protected String restServerUrl = "http://localhost:1317";
-    protected String restServerUrl = "https://stargate.evaio.net";
+    protected String restServerUrl = "http://localhost:10059";
+//protected String restServerUrl = "https://stargate.evaio.net";
+//    protected String restServerUrl = "https://stargate.evaio.net";
 
     protected String sequenceNum;
     protected String accountNum;
@@ -38,12 +39,7 @@ public class MsgBase {
         this.msgType = type;
     }
 
-    public void setRestServerUrl(String restServerUrl) {
-        this.restServerUrl = restServerUrl;
-    }
-
-
-    static Signature sign(Object data, String privateKey) {
+    static Signature sign(Data2Sign data, String privateKey) {
         Signature signature = new Signature();
 
         try {
@@ -52,6 +48,36 @@ public class MsgBase {
 
             // sign
             byte[] sig = Crypto.sign(EncodeUtils.hexStringToByteArray(EncodeUtils.bytesToHex(byteSignData)), privateKey);
+
+            String sigResult = Strings.fromByteArray(Base64.encode(sig));
+
+            //组装签名结构
+            Pubkey pubkey = new Pubkey();
+            pubkey.setType("tendermint/PubKeySecp256k1");
+            String pubKeyString = Hex.toHexString(Crypto.generatePubKeyFromPriv(privateKey));
+            pubkey.setValue(Strings.fromByteArray(Base64.encode(Hex.decode(pubKeyString))));
+            signature.setPubkey(pubkey);
+            signature.setSignature(sigResult);
+
+        } catch (Exception e) {
+            System.out.println("serialize msg failed");
+        }
+
+        return signature;
+    }
+
+    static Signature sign2(Data2Sign data, String privateKey) {
+        Signature signature = new Signature();
+
+        try {
+
+            String signDataJson = JSONObject.toJSONString(data);
+
+            //序列化
+            byte[] byteSignData = signDataJson.getBytes();
+
+            // sign
+            byte[] sig = Crypto.sign(byteSignData, privateKey);
 
             String sigResult = Strings.fromByteArray(Base64.encode(sig));
 
