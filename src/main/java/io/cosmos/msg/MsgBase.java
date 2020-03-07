@@ -39,8 +39,10 @@ public class MsgBase {
         this.msgType = type;
     }
 
-    static Signature sign(String data, String privateKey) throws Exception {
+    static Signature sign(Data2Sign obj, String privateKey) throws Exception {
         //sign
+
+        String data = obj.toJson();
 
         System.out.println("Tx to sign:");
         System.out.println(data);
@@ -56,16 +58,23 @@ public class MsgBase {
         signature.setPubkey(pubkey);
         signature.setSignature(sigResult);
 
+        System.out.println("privateKey: ");
+        System.out.println(privateKey);
+
         System.out.println("signature: ");
         System.out.println(sigResult);
 
         return signature;
     }
 
-    static Signature signV35(Object data, String privateKey) {
+    static Signature signV35(Data2Sign data, String privateKey) {
         Signature signature = new Signature();
 
         try {
+
+            System.out.println("Tx to sign:");
+            System.out.println(data);
+
             //序列化
             byte[] byteSignData = EncodeUtils.toJsonEncodeBytes(data);
 
@@ -89,6 +98,53 @@ public class MsgBase {
         return signature;
     }
 
+    public void submit(Message message,
+                       String feeAmount,
+                       String gas,
+                       String memo) {
+        try {
+            List<Token> amountList = new ArrayList<>();
+            Token amount = new Token();
+            amount.setDenom(EnvInstance.getEnv().GetDenom());
+            amount.setAmount(feeAmount);
+            amountList.add(amount);
+
+            //组装待签名交易结构
+            Fee fee = new Fee();
+            fee.setAmount(amountList);
+            fee.setGas(gas);
+
+
+            Message[] msgs = new Message[1];
+            msgs[0] = message;
+
+            Data2Sign signData = new Data2Sign(accountNum, EnvInstance.getEnv().GetChainid(), fee, memo, msgs, sequenceNum);
+            // signData转为Json串
+
+
+            Signature signature = MsgBase.sign(signData, priKeyString);
+//            Signature signature = MsgBase.signV35(signData, priKeyString);
+
+            BoardcastTx cosmosTransaction = new BoardcastTx();
+            cosmosTransaction.setMode("block");
+
+            TxValue cosmosTx = new TxValue();
+            cosmosTx.setType("auth/StdTx");
+            cosmosTx.setMsgs(msgs);
+            cosmosTx.setFee(fee);
+            cosmosTx.setMemo(memo);
+
+            List<Signature> signatureList = new ArrayList<>();
+            signatureList.add(signature);
+            cosmosTx.setSignatures(signatureList);
+
+            cosmosTransaction.setTx(cosmosTx);
+
+            boardcast(cosmosTransaction.toJson());
+        } catch (Exception e) {
+            System.out.println("serialize transfer msg failed");
+        }
+    }
 
     void initMnemonic(String mnemonic) {
         String prikey = Crypto.generatePrivateKeyFromMnemonic(mnemonic);
@@ -135,52 +191,4 @@ public class MsgBase {
     }
 
 
-    public void submit(Message message,
-                       String feeAmount,
-                       String gas,
-                       String memo) {
-        try {
-            List<Token> amountList = new ArrayList<>();
-            Token amount = new Token();
-            amount.setDenom(EnvInstance.getEnv().GetDenom());
-            amount.setAmount(feeAmount);
-            amountList.add(amount);
-
-            //组装待签名交易结构
-            Fee fee = new Fee();
-            fee.setAmount(amountList);
-            fee.setGas(gas);
-
-
-            Message[] msgs = new Message[1];
-            msgs[0] = message;
-
-            Data2Sign signData = new Data2Sign(accountNum, EnvInstance.getEnv().GetChainid(), fee, memo, msgs, sequenceNum);
-            // signData转为Json串
-            String signDataJson = signData.toJson();
-
-
-            Signature signature = MsgBase.sign(signDataJson, priKeyString);
-//            Signature signature = MsgBase.signV35(signData, priKeyString);
-
-            BoardcastTx cosmosTransaction = new BoardcastTx();
-            cosmosTransaction.setMode("block");
-
-            TxValue cosmosTx = new TxValue();
-            cosmosTx.setType("auth/StdTx");
-            cosmosTx.setMsgs(msgs);
-            cosmosTx.setFee(fee);
-            cosmosTx.setMemo(memo);
-
-            List<Signature> signatureList = new ArrayList<>();
-            signatureList.add(signature);
-            cosmosTx.setSignatures(signatureList);
-
-            cosmosTransaction.setTx(cosmosTx);
-
-            boardcast(cosmosTransaction.toJson());
-        } catch (Exception e) {
-            System.out.println("serialize transfer msg failed");
-        }
-    }
 }
