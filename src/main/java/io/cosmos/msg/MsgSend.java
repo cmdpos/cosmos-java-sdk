@@ -8,24 +8,19 @@ import io.cosmos.types.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-// eva1hg40dv5e237qy28vtyum52ygke32ez35syykpz
-//"depart neither they audit pen exile fire smart tongue express blanket burden culture shove curve address together pottery suggest lady sell clap seek whisper",
-//
-//                 eva1geyy4wtak2q9effnfhze9u4htd8yxxma0jmgl6
-//                "country live width exotic behind mad belt bachelor later outside forget rude pudding material orbit shoot kind curve endless prosper make exotic welcome maple",
-
 public class MsgSend extends MsgBase {
 
     public static void main(String[] args) {
-        EnvInstance.setEnv("okl");
+        EnvInstance.setEnv("ok1");
         MsgSend msg = new MsgSend();
 
         msg.setMsgType("cosmos-sdk/MsgSend");
 
         msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message messages = msg.produceSendMsg(EnvInstance.getEnv().GetDenom(), "16",
+        Message messages = msg.produceSendMsg(EnvInstance.getEnv().GetDenom(),
+                "16",
+//                "16", use 16.00000000 for v37
                 EnvInstance.getEnv().GetNode1Addr());
 
         msg.submit(messages, "6", "200000", "cosmos transfer");

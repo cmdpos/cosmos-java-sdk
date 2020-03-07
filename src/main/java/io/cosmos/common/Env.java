@@ -12,7 +12,6 @@ public class Env {
         return "testchain";
     }
 
-
     public String GetRestServerUrl(){
         return  "http://localhost:10059";
     }
@@ -21,11 +20,9 @@ public class Env {
         return "M/44H/118H/0H/0/0";
     }
 
-
     public String GetValidatorAddrPrefix(){
         return  "evavaloper";
     }
-
 
     public String GetRestPathPrefix() {
         return "";
@@ -34,11 +31,9 @@ public class Env {
         return true;
     };
 
-
     public String GetTxUrlPath() {
         return "/txs";
     };
-
 
     public String GetNode0Mnmonic() {
         return "depart neither they audit pen exile fire smart tongue express blanket burden culture shove curve address together pottery suggest lady sell clap seek whisper";
@@ -54,11 +49,8 @@ public class Env {
         return "evavaloper1hg40dv5e237qy28vtyum52ygke32ez35xexq98";
     };
 
-
     public String GetNode1Addr() {
         return "eva1geyy4wtak2q9effnfhze9u4htd8yxxma0jmgl6";
     };
-
-
 
 }
