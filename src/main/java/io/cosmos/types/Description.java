@@ -17,6 +17,9 @@ public class Description {
 
     private String moniker;
     private String website;
+//    private String website;
+//    private String moniker;
+
     public void setMoniker(String moniker) {
         this.moniker = moniker;
     }

@@ -52,8 +52,8 @@ public class OKEnv extends Env {
     };
 
 
-    public String GetNode0ValAddr() {
-        return "okchainvaloper10q0rk5qnyag7wfvvt7rtphlw589m7frs863s3m";
-    };
+//    public String GetNode0ValAddr() {
+//        return "okchainvaloper10q0rk5qnyag7wfvvt7rtphlw589m7frs863s3m";
+//    };
 
 }

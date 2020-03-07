@@ -6,7 +6,7 @@ public class EnvInstance {
     static Env localEnv = new LocalEnv();
     static Env okEnv = new OKEnv();
 
-    static Env env = null;
+    static Env env = localEnv;
 
     static public void setEnv(String type) {
 

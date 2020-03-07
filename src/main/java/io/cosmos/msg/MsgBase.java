@@ -31,6 +31,7 @@ public class MsgBase {
     protected String accountNum;
     protected String pubKeyString;
     protected String address;
+    protected String operAddress;
     protected String priKeyString;
 
     static protected String msgType;
@@ -66,7 +67,7 @@ public class MsgBase {
 
         String sigResult = null;
         try {
-            System.out.println("===============Utils.serializer.toJson=================");
+//            System.out.println("===============Utils.serializer.toJson=================");
 
             System.out.println("row data:");
             System.out.println(data);
@@ -87,7 +88,7 @@ public class MsgBase {
 
             System.out.println("result:");
             System.out.println(sigResult);
-            System.out.println("================================");
+//            System.out.println("================================");
 
         } catch (Exception e) {
             System.out.println("serialize msg failed");
@@ -126,37 +127,6 @@ public class MsgBase {
         return sigResult;
     }
 
-    static Signature signV35(Data2Sign data, String privateKey) {
-        Signature signature = new Signature();
-
-        try {
-
-            System.out.println("Tx to sign:");
-            System.out.println(data);
-
-            //序列化
-            byte[] byteSignData = EncodeUtils.toJsonEncodeBytes(data);
-
-            // sign
-            byte[] sig = Crypto.sign(EncodeUtils.hexStringToByteArray(EncodeUtils.bytesToHex(byteSignData)), privateKey);
-
-            String sigResult = Strings.fromByteArray(Base64.encode(sig));
-
-            //组装签名结构
-            Pubkey pubkey = new Pubkey();
-            pubkey.setType("tendermint/PubKeySecp256k1");
-            String pubKeyString = Hex.toHexString(Crypto.generatePubKeyFromPriv(privateKey));
-            pubkey.setValue(Strings.fromByteArray(Base64.encode(Hex.decode(pubKeyString))));
-            signature.setPubkey(pubkey);
-            signature.setSignature(sigResult);
-
-        } catch (Exception e) {
-            System.out.println("serialize msg failed");
-        }
-
-        return signature;
-    }
-
     public void submit(Message message,
                        String feeAmount,
                        String gas,
@@ -177,12 +147,9 @@ public class MsgBase {
             Message[] msgs = new Message[1];
             msgs[0] = message;
 
-            Data2Sign signData = new Data2Sign(accountNum, EnvInstance.getEnv().GetChainid(), fee, memo, msgs, sequenceNum);
-            // signData转为Json串
+            Data2Sign data = new Data2Sign(accountNum, EnvInstance.getEnv().GetChainid(), fee, memo, msgs, sequenceNum);
 
-
-            Signature signature = MsgBase.sign(signData, priKeyString);
-//            Signature signature = MsgBase.signV35(signData, priKeyString);
+            Signature signature = MsgBase.sign(data, priKeyString);
 
             BoardcastTx cosmosTransaction = new BoardcastTx();
             cosmosTransaction.setMode("block");
@@ -218,6 +185,12 @@ public class MsgBase {
         sequenceNum = getSequance(accountJson);
         accountNum = getAccountNumber(accountJson);
         priKeyString = privateKey;
+
+        operAddress = Crypto.generateValidatorAddressFromPub(pubKeyString);
+    }
+
+    public String getOperAddress() {
+        return operAddress;
     }
 
     private String getAccountPrivate(String userAddress) {

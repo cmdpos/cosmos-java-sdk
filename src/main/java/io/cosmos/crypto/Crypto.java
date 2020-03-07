@@ -124,4 +124,17 @@ public class Crypto {
         }
         return true;
     }
+
+
+    public static String generateValidatorAddressFromPub(String pubKey) {
+
+        try {
+            String addr = AddressUtil.createNewAddressSecp256k1(EnvInstance.getEnv().GetValidatorAddrPrefix(), Hex.decode(pubKey));
+            return addr;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 }

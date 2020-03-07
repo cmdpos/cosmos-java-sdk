@@ -45,9 +45,9 @@ public class Env {
     public String GetNode0Addr() {
         return "eva1hg40dv5e237qy28vtyum52ygke32ez35syykpz";
     };
-    public String GetNode0ValAddr() {
-        return "evavaloper1hg40dv5e237qy28vtyum52ygke32ez35xexq98";
-    };
+//    public String GetNode0ValAddr() {
+//        return "evavaloper1hg40dv5e237qy28vtyum52ygke32ez35xexq98";
+//    };
 
     public String GetNode1Addr() {
         return "eva1geyy4wtak2q9effnfhze9u4htd8yxxma0jmgl6";
