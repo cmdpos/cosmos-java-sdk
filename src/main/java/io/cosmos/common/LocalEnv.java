@@ -14,11 +14,8 @@ public class LocalEnv extends Env {
 
 
     public String GetRestServerUrl(){
-
-//        return  "http://localhost:26659";
         return  "http://localhost:10059";
     }
-
 
     public String GetHDPath(){
         return "M/44H/118H/0H/0/0";
@@ -26,6 +23,6 @@ public class LocalEnv extends Env {
 
 
     public String GetValidatorAddrPrefix(){
-        return  "okchainvaloper";
+        return  "evavaloper";
     }
 }

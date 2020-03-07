@@ -1,5 +1,6 @@
 package io.cosmos.msg;
 
+import io.cosmos.common.EnvInstance;
 import io.cosmos.msg.utils.*;
 import io.cosmos.msg.utils.type.MsgSendValue;
 import io.cosmos.types.*;
@@ -20,17 +21,11 @@ public class MsgSend extends MsgBase {
         MsgSend msg = new MsgSend();
         msg.setMsgType("cosmos-sdk/MsgSend");
 
-        msg.initMnemonic(
-                "depart neither they audit pen exile " +
-                        "fire smart tongue express blanket burden " +
-                        "culture shove curve address together pottery " +
-                        "suggest lady sell clap seek whisper");
 
-//        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
-
-        Message messages = msg.produceSendMsg("neva",
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
+        Message messages = msg.produceSendMsg(EnvInstance.getEnv().GetDenom(),
                 "16",
-                "eva1geyy4wtak2q9effnfhze9u4htd8yxxma0jmgl6");
+                EnvInstance.getEnv().GetNode1Addr());
 
         msg.submit(messages,
                 "6",

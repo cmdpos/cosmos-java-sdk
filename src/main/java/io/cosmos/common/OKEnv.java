@@ -6,7 +6,7 @@ public class OKEnv extends Env {
         return "okchain";
     };
     public String GetDenom(){
-        return "tokt";
+        return "okt";
     }
     public String GetChainid(){
         return "okchain";
@@ -35,4 +35,25 @@ public class OKEnv extends Env {
     public boolean HasFee() {
         return false;
     };
+
+
+    public String GetNode0Mnmonic() {
+        return "puzzle glide follow cruel say burst deliver wild tragic galaxy lumber offer";
+    };
+    public String GetNode1Mnmonic() {
+        return "palace cube bitter light woman side pave cereal donor bronze twice work";
+    };
+
+    public String GetNode0Addr() {
+        return "okchain10q0rk5qnyag7wfvvt7rtphlw589m7frsmyq4ya";
+    };
+    public String GetNode1Addr() {
+        return "okchain1v853tq96n9ghvyxlvqyxyj97589clccr33yr7a";
+    };
+
+
+    public String GetNode0ValAddr() {
+        return "okchainvaloper10q0rk5qnyag7wfvvt7rtphlw589m7frs863s3m";
+    };
+
 }

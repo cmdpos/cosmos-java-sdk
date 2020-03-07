@@ -10,6 +10,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(alphabetic = true)
 public class Description {
+
+    // very important, ensure order: d i m w
     private String details;
     private String identity;
 
@@ -33,8 +35,8 @@ public class Description {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("details", this.details)
                 .append("identity", this.identity)
-                .append("moniker", this.moniker)
                 .append("website", this.website)
+                .append("moniker", this.moniker)
                 .toString();
     }
 }
