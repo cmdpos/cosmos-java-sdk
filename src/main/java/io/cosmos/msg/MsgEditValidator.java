@@ -12,23 +12,11 @@ public class MsgEditValidator extends MsgBase {
     public static void main(String[] args) {
         MsgEditValidator msg = new MsgEditValidator();
         msg.setMsgType("cosmos-sdk/MsgEditValidator");
-//        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
-
-//        msg.initMnemonic(
-//                "depart neither they audit pen exile " +
-//                        "fire smart tongue express blanket burden " +
-//                        "culture shove curve address together pottery " +
-//                        "suggest lady sell clap seek whisper");
-        msg.initMnemonic(
-                "puzzle glide follow cruel say burst deliver wild tragic galaxy lumber offer");
-
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
         Message messages = msg.produceMsg();
 
-        msg.submit(messages,
-                "6",
-                "200000",
-                "");
+        msg.submit(messages, "6", "200000", "");
     }
 
     public Message produceMsg() {
@@ -41,8 +29,7 @@ public class MsgEditValidator extends MsgBase {
 
         MsgEditValidatorValue value = new MsgEditValidatorValue();
 
-//        value.setAddress("evavaloper1hg40dv5e237qy28vtyum52ygke32ez35xexq98");
-        value.setAddress("okchainvaloper10q0rk5qnyag7wfvvt7rtphlw589m7frs863s3m");
+        value.setAddress(EnvInstance.getEnv().GetNode0ValAddr());
 //        value.setCommissionRate("0.6");
         value.setDescription(d);
         value.setMinSelfDelegation("1100");

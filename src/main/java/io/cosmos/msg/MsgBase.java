@@ -40,23 +40,9 @@ public class MsgBase {
     }
 
     static Signature sign(Data2Sign obj, String privateKey) throws Exception {
-        //sign
-
-//        String data = obj.toJson();
-//
-//        System.out.println("Tx to sign:");
-//        System.out.println(data);
-//
-//        byte[] byteSignData = data.getBytes();
-//
-//        byte[] sig = Crypto.sign(byteSignData, privateKey);
-//
-//        String sigResult = Strings.fromByteArray(Base64.encode(sig));
-
-        String sigResult = obj2byteok(obj, privateKey);
+        String sigResult = null;
+//        String sigResult = obj2byteok(obj, privateKey);
         sigResult = obj2byte(obj, privateKey);
-
-
 
         Signature signature = new Signature();
         Pubkey pubkey = new Pubkey();
@@ -80,7 +66,7 @@ public class MsgBase {
 
         String sigResult = null;
         try {
-            System.out.println("===============JSONObject.toJSONString=================");
+            System.out.println("===============Utils.serializer.toJson=================");
 
             System.out.println("row data:");
             System.out.println(data);

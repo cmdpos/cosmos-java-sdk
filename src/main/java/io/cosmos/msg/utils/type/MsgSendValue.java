@@ -13,6 +13,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(alphabetic = true)
 public class MsgSendValue {
+    private List<Token> amount;
 
     @JsonProperty("from_address")
     @SerializedName("from_address")
@@ -22,7 +23,6 @@ public class MsgSendValue {
     @SerializedName("to_address")
     private String toAddress;
 
-    private List<Token> amount;
 
     public void setAmount(List<Token> amount) {
         this.amount = amount;
