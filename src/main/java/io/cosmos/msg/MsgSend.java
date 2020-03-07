@@ -11,16 +11,16 @@ import java.util.List;
 public class MsgSend extends MsgBase {
 
     public static void main(String[] args) {
-        EnvInstance.setEnv("ok");
+        EnvInstance.setEnv("okl");
         MsgSend msg = new MsgSend();
 
         msg.setMsgType("cosmos-sdk/MsgSend");
 
         msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message messages = msg.produceSendMsg(EnvInstance.getEnv().GetDenom(),
-                "16.00000000",
-//                "16", use 16.00000000 for v37
+        Message messages = msg.produceSendMsg(
+                EnvInstance.getEnv().GetDenom(),
+                EnvInstance.getEnv().GetTransferAmount(),
                 EnvInstance.getEnv().GetNode1Addr());
 
         msg.submit(messages, "6", "200000", "cosmos transfer");

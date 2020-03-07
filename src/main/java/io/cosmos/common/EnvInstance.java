@@ -2,11 +2,11 @@ package io.cosmos.common;
 
 public class EnvInstance {
 
-    static Env prodEnv = new ProdEnv();
-    static Env localEnv = new LocalEnv();
-    static Env okEnv = new OKEnv();
+    static EnvBase prodEnv = new ProdEnv();
+    static EnvBase localEnv = new LocalEnv();
+    static EnvBase okEnv = new OKEnv();
 
-    static Env env = localEnv;
+    static EnvBase env = localEnv;
 
     static public void setEnv(String type) {
 
@@ -19,17 +19,7 @@ public class EnvInstance {
         }
     }
 
-    static public Env getEnv() {
+    static public EnvBase getEnv() {
         return env;
-
-//        String type = "ok";
-//
-//        if (type == "ok") {
-//            return okEnv;
-//        } else if (type == "prod") {
-//            return prodEnv;
-//        }
-//
-//        return localEnv;
     }
 }

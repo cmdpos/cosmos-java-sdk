@@ -1,6 +1,6 @@
 package io.cosmos.common;
 
-public class Env {
+public class EnvBase {
 
     public String GetMainPrefix(){
         return "eva";
@@ -51,6 +51,9 @@ public class Env {
 
     public String GetNode1Addr() {
         return "eva1geyy4wtak2q9effnfhze9u4htd8yxxma0jmgl6";
+    };
+    public String GetTransferAmount() {
+        return "16";
     };
 
 }

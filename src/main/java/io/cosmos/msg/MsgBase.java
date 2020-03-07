@@ -200,12 +200,18 @@ public class MsgBase {
     }
 
     private String getSequance(JSONObject account) {
-        String res = (String) account.getJSONObject("value").get("sequence");
+        String res = (String) account
+//                .getJSONObject("result")
+                .getJSONObject("value")
+                .get("sequence");
         return res;
     }
 
     private String getAccountNumber(JSONObject account) {
-        String res = (String) account.getJSONObject("value").get("account_number");
+        String res = (String) account
+//                .getJSONObject("result")
+                .getJSONObject("value")
+                .get("account_number");
         return res;
     }
 

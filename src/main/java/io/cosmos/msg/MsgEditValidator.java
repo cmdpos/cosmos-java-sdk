@@ -10,7 +10,7 @@ import io.cosmos.types.Token;
 public class MsgEditValidator extends MsgBase {
 
     public static void main(String[] args) {
-        EnvInstance.setEnv("ok");
+        EnvInstance.setEnv("ok1");
 
         MsgEditValidator msg = new MsgEditValidator();
         msg.setMsgType("cosmos-sdk/MsgEditValidator");

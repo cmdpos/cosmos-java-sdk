@@ -1,6 +1,6 @@
 package io.cosmos.common;
 
-public class ProdEnv extends Env {
+public class ProdEnv extends EnvBase {
 
     public String GetMainPrefix(){
         return "eva";
