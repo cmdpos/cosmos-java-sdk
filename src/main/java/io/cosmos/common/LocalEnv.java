@@ -1,6 +1,6 @@
 package io.cosmos.common;
 
-public class ProdEnv extends Env {
+public class LocalEnv extends Env {
 
     public String GetMainPrefix(){
         return "eva";
@@ -9,13 +9,15 @@ public class ProdEnv extends Env {
         return "neva";
     }
     public String GetChainid(){
-        return "evaio";
+        return "testchain";
     }
+
 
     public String GetRestServerUrl(){
-        return  "https://stargate.evaio.net";
-    }
 
+//        return  "http://localhost:26659";
+        return  "http://localhost:10059";
+    }
 
 
     public String GetHDPath(){

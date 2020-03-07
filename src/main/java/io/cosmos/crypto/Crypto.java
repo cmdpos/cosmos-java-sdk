@@ -68,7 +68,7 @@ public class Crypto {
         byte[] seed = MnemonicCode.INSTANCE.toSeed(words, "");
         DeterministicKey key = HDKeyDerivation.createMasterPrivateKey(seed);
 
-        List<ChildNumber> childNumbers = HDUtils.parsePath(Constants.COSMOS_HD_PATH);
+        List<ChildNumber> childNumbers = HDUtils.parsePath(EnvInstance.getEnv().GetHDPath());
         for (ChildNumber cn : childNumbers) {
             key = HDKeyDerivation.deriveChildKey(key, cn);
         }
@@ -104,7 +104,7 @@ public class Crypto {
 
     public static String generateAddressFromPub(String pubKey) {
         try {
-            String addr = AddressUtil.createNewAddressSecp256k1(EnvInstance.env.GetMainPrefix(), Hex.decode(pubKey));
+            String addr = AddressUtil.createNewAddressSecp256k1(EnvInstance.getEnv().GetMainPrefix(), Hex.decode(pubKey));
             return addr;
         } catch (Exception e) {
             e.printStackTrace();

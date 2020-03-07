@@ -31,7 +31,7 @@ public class CryptoTest {
         System.out.println("pubkey");
         System.out.println(Hex.toHexString(pub));
         try {
-            String addr = AddressUtil.createNewAddressSecp256k1(EnvInstance.env.GetMainPrefix(), pub);
+            String addr = AddressUtil.createNewAddressSecp256k1(EnvInstance.getEnv().GetMainPrefix(), pub);
             System.out.println(addr);
         }catch (Exception e){
             e.printStackTrace();

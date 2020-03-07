@@ -7,6 +7,7 @@ import io.cosmos.types.Signature;
 import java.util.List;
 
 public class TxValue {
+    private String memo;
 
     @SerializedName("msg")
     private Message[] msgs;
@@ -15,7 +16,6 @@ public class TxValue {
 
     private List<Signature> signatures;
 
-    private String memo;
 
     private  String type;
 

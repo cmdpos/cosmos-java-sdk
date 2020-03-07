@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.cosmos.common.Constants;
 import io.cosmos.common.EnvInstance;
 import io.cosmos.common.HttpUtils;
+import io.cosmos.common.Utils;
 import io.cosmos.crypto.Crypto;
 import io.cosmos.msg.utils.BoardcastTx;
 import io.cosmos.msg.utils.Data2Sign;
@@ -24,8 +25,7 @@ import java.util.List;
 
 public class MsgBase {
 
-//    protected String restServerUrl = "http://localhost:1317";
-    protected String restServerUrl = "https://stargate.evaio.net";
+    protected String restServerUrl = EnvInstance.getEnv().GetRestServerUrl();
 
     protected String sequenceNum;
     protected String accountNum;
@@ -39,12 +39,30 @@ public class MsgBase {
         this.msgType = type;
     }
 
-    public void setRestServerUrl(String restServerUrl) {
-        this.restServerUrl = restServerUrl;
+    static Signature sign(String data, String privateKey) throws Exception {
+        //sign
+
+        System.out.println("Tx to sign:");
+        System.out.println(data);
+
+        byte[] byteSignData = data.getBytes();
+
+        byte[] sig = Crypto.sign(byteSignData, privateKey);
+        String sigResult = Strings.fromByteArray(Base64.encode(sig));
+        Signature signature = new Signature();
+        Pubkey pubkey = new Pubkey();
+        pubkey.setType("tendermint/PubKeySecp256k1");
+        pubkey.setValue(Strings.fromByteArray(Base64.encode(Hex.decode(Crypto.generatePubKeyHexFromPriv(privateKey)))));
+        signature.setPubkey(pubkey);
+        signature.setSignature(sigResult);
+
+        System.out.println("signature: ");
+        System.out.println(sigResult);
+
+        return signature;
     }
 
-
-    static Signature sign(Object data, String privateKey) {
+    static Signature signV35(Object data, String privateKey) {
         Signature signature = new Signature();
 
         try {
@@ -77,6 +95,7 @@ public class MsgBase {
         init(prikey);
     }
 
+
     void init(String privateKey) {
         pubKeyString = Hex.toHexString(Crypto.generatePubKeyFromPriv(privateKey));
         address = Crypto.generateAddressFromPriv(privateKey);
@@ -87,7 +106,7 @@ public class MsgBase {
     }
 
     private String getAccountPrivate(String userAddress) {
-        String url = restServerUrl + Constants.COSMOS_ACCOUNT_URL_PATH + userAddress;
+        String url = restServerUrl + EnvInstance.getEnv().GetRestPathPrefix() + Constants.COSMOS_ACCOUNT_URL_PATH + userAddress;
         System.out.println(url);
         return HttpUtils.httpGet(url);
     }
@@ -107,7 +126,7 @@ public class MsgBase {
         System.out.println(tx);
 
         System.out.println("Response:");
-        String res = HttpUtils.httpPost(restServerUrl + Constants.COSMOS_TRANSACTION_URL_PATH, tx);
+        String res = HttpUtils.httpPost(restServerUrl + EnvInstance.getEnv().GetTxUrlPath(), tx);
         JSONObject result = JSON.parseObject(res);
 
         System.out.println(result);
@@ -123,7 +142,7 @@ public class MsgBase {
         try {
             List<Token> amountList = new ArrayList<>();
             Token amount = new Token();
-            amount.setDenom(EnvInstance.env.GetDenom());
+            amount.setDenom(EnvInstance.getEnv().GetDenom());
             amount.setAmount(feeAmount);
             amountList.add(amount);
 
@@ -136,10 +155,13 @@ public class MsgBase {
             Message[] msgs = new Message[1];
             msgs[0] = message;
 
-            Data2Sign signData = new Data2Sign(accountNum, EnvInstance.env.GetChainid(), fee, memo, msgs, sequenceNum);
-            List<Signature> signatureList = new ArrayList<>();
-            Signature signature = MsgBase.sign(signData, priKeyString);
-            signatureList.add(signature);
+            Data2Sign signData = new Data2Sign(accountNum, EnvInstance.getEnv().GetChainid(), fee, memo, msgs, sequenceNum);
+            // signData转为Json串
+            String signDataJson = signData.toJson();
+
+
+            Signature signature = MsgBase.sign(signDataJson, priKeyString);
+//            Signature signature = MsgBase.signV35(signData, priKeyString);
 
             BoardcastTx cosmosTransaction = new BoardcastTx();
             cosmosTransaction.setMode("block");
@@ -149,7 +171,11 @@ public class MsgBase {
             cosmosTx.setMsgs(msgs);
             cosmosTx.setFee(fee);
             cosmosTx.setMemo(memo);
+
+            List<Signature> signatureList = new ArrayList<>();
+            signatureList.add(signature);
             cosmosTx.setSignatures(signatureList);
+
             cosmosTransaction.setTx(cosmosTx);
 
             boardcast(cosmosTransaction.toJson());

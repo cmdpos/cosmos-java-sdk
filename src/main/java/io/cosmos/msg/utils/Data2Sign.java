@@ -3,6 +3,9 @@ package io.cosmos.msg.utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.SerializedName;
+import io.cosmos.common.EnvInstance;
+import io.cosmos.common.Utils;
 import io.cosmos.types.Fee;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -11,9 +14,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(alphabetic = true)
 public class Data2Sign {
-    @JsonProperty("account_number")
+
+//    @JsonProperty("account_number")
+//    @SerializedName("account_number")
     private String accountNumber;
+
     @JsonProperty("chain_id")
+    @SerializedName("chain_id")
     private String chainId;
     private Fee fee;
     private String memo;
@@ -27,7 +34,9 @@ public class Data2Sign {
     public Data2Sign(String accountNumber, String chainId, Fee fee, String memo, Message[] msgs, String sequence) {
         this.accountNumber = accountNumber;
         this.chainId = chainId;
-        this.fee = fee;
+        if (EnvInstance.getEnv().HasFee()) {
+            this.fee = fee;
+        }
         this.memo = memo;
         this.msgs = msgs;
         this.sequence = sequence;
@@ -95,5 +104,9 @@ public class Data2Sign {
             .append("msgs", msgs)
             .append("sequence", sequence)
             .toString();
+    }
+
+    public String toJson() {
+        return Utils.serializer.toJson(this);
     }
 }
