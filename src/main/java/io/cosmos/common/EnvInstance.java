@@ -6,15 +6,30 @@ public class EnvInstance {
     static Env localEnv = new LocalEnv();
     static Env okEnv = new OKEnv();
 
-    static public Env getEnv() {
-        String type = "ok";
+    static Env env = null;
+
+    static public void setEnv(String type) {
 
         if (type == "ok") {
-            return okEnv;
+            env = okEnv;
         } else if (type == "prod") {
-            return prodEnv;
+            env = prodEnv;
+        } else {
+            env = localEnv;
         }
+    }
 
-        return localEnv;
+    static public Env getEnv() {
+        return env;
+
+//        String type = "ok";
+//
+//        if (type == "ok") {
+//            return okEnv;
+//        } else if (type == "prod") {
+//            return prodEnv;
+//        }
+//
+//        return localEnv;
     }
 }
