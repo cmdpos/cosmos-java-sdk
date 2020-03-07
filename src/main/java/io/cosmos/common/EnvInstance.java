@@ -7,7 +7,7 @@ public class EnvInstance {
     static Env okEnv = new OKEnv();
 
     static public Env getEnv() {
-        String type = "okq";
+        String type = "ok";
 
         if (type == "ok") {
             return okEnv;

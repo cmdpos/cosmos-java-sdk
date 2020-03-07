@@ -15,8 +15,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @JsonPropertyOrder(alphabetic = true)
 public class Data2Sign {
 
-//    @JsonProperty("account_number")
-//    @SerializedName("account_number")
+    @JsonProperty("account_number")
+    @SerializedName("account_number")
     private String accountNumber;
 
     @JsonProperty("chain_id")

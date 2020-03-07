@@ -42,15 +42,22 @@ public class MsgBase {
     static Signature sign(Data2Sign obj, String privateKey) throws Exception {
         //sign
 
-        String data = obj.toJson();
+//        String data = obj.toJson();
+//
+//        System.out.println("Tx to sign:");
+//        System.out.println(data);
+//
+//        byte[] byteSignData = data.getBytes();
+//
+//        byte[] sig = Crypto.sign(byteSignData, privateKey);
+//
+//        String sigResult = Strings.fromByteArray(Base64.encode(sig));
 
-        System.out.println("Tx to sign:");
-        System.out.println(data);
+        String sigResult = obj2byteok(obj, privateKey);
+        sigResult = obj2byte(obj, privateKey);
 
-        byte[] byteSignData = data.getBytes();
 
-        byte[] sig = Crypto.sign(byteSignData, privateKey);
-        String sigResult = Strings.fromByteArray(Base64.encode(sig));
+
         Signature signature = new Signature();
         Pubkey pubkey = new Pubkey();
         pubkey.setType("tendermint/PubKeySecp256k1");
@@ -65,6 +72,72 @@ public class MsgBase {
         System.out.println(sigResult);
 
         return signature;
+    }
+
+
+
+    static String obj2byte(Data2Sign data, String privateKey) {
+
+        String sigResult = null;
+        try {
+            System.out.println("===============JSONObject.toJSONString=================");
+
+            System.out.println("row data:");
+            System.out.println(data);
+            System.out.println("json data:");
+
+            String signDataJson = Utils.serializer.toJson(data);
+            System.out.println(signDataJson);
+
+            //序列化
+            byte[] byteSignData = signDataJson.getBytes();
+
+            System.out.println("byte data length:");
+            System.out.println(byteSignData.length);
+
+
+            byte[] sig = Crypto.sign(byteSignData, privateKey);
+            sigResult = Strings.fromByteArray(Base64.encode(sig));
+
+            System.out.println("result:");
+            System.out.println(sigResult);
+            System.out.println("================================");
+
+        } catch (Exception e) {
+            System.out.println("serialize msg failed");
+        }
+        return sigResult;
+    }
+
+    static String obj2byteok(Data2Sign data, String privateKey) {
+        byte[] byteSignData = null;
+        String sigResult = null;
+        try {
+
+            System.out.println("===============EncodeUtils=================");
+            System.out.println("row data:");
+            System.out.println(data);
+            System.out.println("json data:");
+            System.out.println(EncodeUtils.toJsonStringSortKeys(data));
+
+            byte[] tmp = EncodeUtils.toJsonEncodeBytes(data);
+            byteSignData = EncodeUtils.hexStringToByteArray(EncodeUtils.bytesToHex(tmp));
+
+            System.out.println("byte data length:");
+            System.out.println(byteSignData.length);
+
+            byte[] sig = Crypto.sign(byteSignData, privateKey);
+            sigResult = Strings.fromByteArray(Base64.encode(sig));
+
+            System.out.println("result:");
+            System.out.println(sigResult);
+            System.out.println("================================");
+
+        } catch (Exception e) {
+            System.out.println("serialize msg failed");
+        }
+
+        return sigResult;
     }
 
     static Signature signV35(Data2Sign data, String privateKey) {
