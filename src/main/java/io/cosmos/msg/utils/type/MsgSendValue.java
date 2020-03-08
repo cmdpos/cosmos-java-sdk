@@ -23,21 +23,12 @@ public class MsgSendValue {
     @SerializedName("to_address")
     private String toAddress;
 
-
     public void setAmount(List<Token> amount) {
         this.amount = amount;
     }
 
     public List<Token> getAmount() {
         return amount;
-    }
-
-    public String getFromAddress() {
-        return fromAddress;
-    }
-
-    public String getToAddress() {
-        return toAddress;
     }
 
     public void setFromAddress(String fromAddress) {

@@ -55,4 +55,10 @@ public class OKEnv extends EnvBase {
     public String GetTransferAmount() {
         return "16.00000000";
     };
+
+
+    public String GetTendermintConsensusPubkey() {
+        return "okchainvalconspub1zcjduepqwfr8lelpqerf8xyc63vqtje0wvhd68h7uce6ludygc28uj5hc9ushev2kp";
+    };
+
 }

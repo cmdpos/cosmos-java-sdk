@@ -2,7 +2,7 @@ package io.cosmos.msg;
 
 import io.cosmos.common.EnvInstance;
 import io.cosmos.msg.utils.Message;
-import io.cosmos.msg.utils.type.MsgCreateValidatorValue;
+import io.cosmos.msg.utils.type.MsgCreateOKValidatorValue;
 import io.cosmos.types.CommissionMsg;
 import io.cosmos.types.Description;
 import io.cosmos.types.Token;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MsgCreateValidator extends MsgBase{
+public class MsgCreateOKValidator extends MsgBase{
 
     public static void main(String[] args) {
-        EnvInstance.setEnv("ok1");
-        MsgCreateValidator msg = new MsgCreateValidator();
+        EnvInstance.setEnv("ok");
+        MsgCreateOKValidator msg = new MsgCreateOKValidator();
         msg.setMsgType("cosmos-sdk/MsgCreateValidator");
         msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
         Message messages = msg.produceMsg();
@@ -23,10 +23,11 @@ public class MsgCreateValidator extends MsgBase{
     }
 
     public Message produceMsg() {
-        MsgCreateValidatorValue value = new MsgCreateValidatorValue();
+        MsgCreateOKValidatorValue value = new MsgCreateOKValidatorValue();
+
         value.setDelegatorAddress(this.address);
         value.setValidatorAddress(this.operAddress);
-        value.setPubKey(EnvInstance.getEnv().GetTendermintConsensusPubkey());
+        value.setPubKey("okchainvalconspub1zcjduepqwfr8lelpqerf8xyc63vqtje0wvhd68h7uce6ludygc28uj5hc9ushev2kp");
 
         Description d = new Description();
         d.setDetails("1");
@@ -35,20 +36,20 @@ public class MsgCreateValidator extends MsgBase{
         d.setWebsite("4");
 
         CommissionMsg c = new CommissionMsg();
-        c.setMaxChangeRate("0.050000000000000000");
-        c.setMaxRate("0.050000000000000000");
-        c.setRate("0.050000000000000000");
+        c.setMaxChangeRate("0.05000000");
+        c.setMaxRate("0.05000000");
+        c.setRate("0.05000000");
 
         Token t = new Token();
-        t.setAmount("68");
+        t.setAmount("68.00000000");
         t.setDenom(EnvInstance.getEnv().GetDenom());
 
-        value.setValue(t);
         value.setCommission(c);
         value.setDescription(d);
-        value.setMinSelfDelegation("1");
+        value.setMinSelfDelegation(t);
 
-        Message<MsgCreateValidatorValue> msg = new Message<>();
+
+        Message<MsgCreateOKValidatorValue> msg = new Message<>();
         msg.setType(msgType);
         msg.setValue(value);
         return msg;

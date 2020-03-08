@@ -19,7 +19,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(alphabetic = true)
-public class MsgCreateValidatorValue {
+public class MsgCreateOKValidatorValue {
 
     private CommissionMsg commission;
 
@@ -31,18 +31,14 @@ public class MsgCreateValidatorValue {
 
     @JsonProperty("min_self_delegation")
     @SerializedName("min_self_delegation")
-    private String minSelfDelegation;
+    private Token minSelfDelegation;
 
     private String pubkey;
 
     @JsonProperty("validator_address")
     @SerializedName("validator_address")
     private String validatorAddress;
-    private Token value;
 
-    public void setValue(Token value) {
-        this.value = value;
-    }
     public void setPubKey(String pubKeyString) {
         this.pubkey= pubKeyString;
     }
@@ -55,7 +51,7 @@ public class MsgCreateValidatorValue {
         this.validatorAddress = validatorAddress;
     }
 
-    public void setMinSelfDelegation(String minSelfDelegation) {
+    public void setMinSelfDelegation(Token minSelfDelegation) {
         this.minSelfDelegation = minSelfDelegation;
     }
 
@@ -72,11 +68,11 @@ public class MsgCreateValidatorValue {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("delegator_address", delegatorAddress)
                 .append("validator_address", validatorAddress)
-                .append("value", this.value)
                 .append("min_self_delegation", this.minSelfDelegation)
                 .append("description", this.description)
                 .append("commission", this.commission)
                 .append("pubkey", this.pubkey)
                 .toString();
     }
+
 }

@@ -29,27 +29,6 @@ public class MsgEditValidatorValue {
     @SerializedName("min_self_delegation")
     private String minSelfDelegation;
 
-
-
-    private String moniker;
-    private String identity;
-    private String website;
-    private String details;
-
-    public void setMoniker(String moniker) {
-        this.moniker = moniker;
-    }
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-
     public void setDescription(Description description) {
         this.description = description;
     }
@@ -72,26 +51,7 @@ public class MsgEditValidatorValue {
                 .append("address", address)
                 .append("min_self_delegation", this.minSelfDelegation)
                 .append("Description", this.description)
-//                .append("moniker", this.moniker)
-//                .append("identity", this.identity)
-//                .append("website", this.website)
-//                .append("details", this.details)
                 .append("commissionRate", this.commissionRate)
                 .toString();
     }
 }
-
-
-    // MsgEditValidator - struct for editing a validator
-//    type MsgEditValidator struct {
-//        Description
-//        ValidatorAddress sdk.ValAddress `json:"address"`
-//
-//        // We pass a reference to the new commission rate and min self delegation as it's not mandatory to
-//        // update. If not updated, the deserialized rate will be zero with no way to
-//        // distinguish if an update was intended.
-//        //
-//        // REF: #2373
-//        CommissionRate    *sdk.Dec `json:""`
-//        MinSelfDelegation *sdk.Int `json:"min_self_delegation"`
-//        }

@@ -13,15 +13,15 @@ import java.util.List;
 @JsonPropertyOrder(alphabetic = true)
 public class CommissionMsg {
 
-    private String rate;
+    @JsonProperty("max_change_rate")
+    @SerializedName("max_change_rate")
+    private String maxChangeRate;
 
     @JsonProperty("max_rate")
     @SerializedName("max_rate")
     private String maxRate;
 
-    @JsonProperty("max_change_rate")
-    @SerializedName("max_change_rate")
-    private String maxChangeRate;
+    private String rate;
 
     public void setRate(String rate) {
         this.rate = rate;
@@ -38,9 +38,9 @@ public class CommissionMsg {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("rate", this.rate)
-                .append("max_rate", this.maxRate)
                 .append("max_change_rate", this.maxChangeRate)
+                .append("max_rate", this.maxRate)
+                .append("rate", this.rate)
                 .toString();
     }
 }

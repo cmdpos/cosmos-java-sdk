@@ -56,4 +56,10 @@ public class EnvBase {
         return "16";
     };
 
+
+    public String GetTendermintConsensusPubkey() {
+        return "evavalconspub1zcjduepqma0hc8c48n7gft4d4pngyqykwax754yhrypy0alpgv47ann2schq997lne";
+    };
+
+
 }

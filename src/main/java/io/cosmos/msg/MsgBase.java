@@ -157,7 +157,11 @@ public class MsgBase {
             TxValue cosmosTx = new TxValue();
             cosmosTx.setType("auth/StdTx");
             cosmosTx.setMsgs(msgs);
-            cosmosTx.setFee(fee);
+
+            if (EnvInstance.getEnv().HasFee()) {
+                cosmosTx.setFee(fee);
+            }
+
             cosmosTx.setMemo(memo);
 
             List<Signature> signatureList = new ArrayList<>();

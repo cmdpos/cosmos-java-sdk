@@ -10,7 +10,7 @@ import io.cosmos.types.Token;
 public class MsgEditValidator extends MsgBase {
 
     public static void main(String[] args) {
-        EnvInstance.setEnv("ok1");
+        EnvInstance.setEnv("okq");
 
         MsgEditValidator msg = new MsgEditValidator();
         msg.setMsgType("cosmos-sdk/MsgEditValidator");
@@ -31,12 +31,12 @@ public class MsgEditValidator extends MsgBase {
 
         MsgEditValidatorValue value = new MsgEditValidatorValue();
 
-
         System.out.println("this.operAddress:");
         System.out.println(this.operAddress);
 
         value.setAddress(this.operAddress);
-//        value.setCommissionRate("0.6");
+        value.setCommissionRate("0.600000000000000000");
+        value.setCommissionRate(null);
         value.setDescription(d);
         value.setMinSelfDelegation("1100");
 
