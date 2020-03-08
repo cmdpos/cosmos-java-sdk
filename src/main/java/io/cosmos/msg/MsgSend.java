@@ -23,7 +23,7 @@ public class MsgSend extends MsgBase {
                 EnvInstance.getEnv().GetTransferAmount(),
                 EnvInstance.getEnv().GetNode1Addr());
 
-        msg.submit(messages, "6", "200000", "cosmos transfer");
+        msg.submit(messages, "6", "200000", "cosmos transfer!");
     }
 
     public Message produceSendMsg(String denom, String amountDenom, String to) {
