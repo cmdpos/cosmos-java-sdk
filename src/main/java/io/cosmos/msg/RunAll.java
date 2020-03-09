@@ -120,8 +120,7 @@ public class RunAll {
 
         MsgWithdrawValidatorCommission msg = new MsgWithdrawValidatorCommission();
         msg.setMsgType("cosmos-sdk/MsgWithdrawValidatorCommission");
-        String mnemonic = "sentence deputy little switch fiction balcony hollow iron net index sound hollow scare attitude only cushion best candy wonder phone napkin sketch announce derive";
-        msg.initMnemonic(mnemonic);
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
         Message messages = msg.produceMsg();
 
