@@ -1,5 +1,6 @@
 package io.cosmos.msg;
 
+import io.cosmos.common.EnvInstance;
 import io.cosmos.msg.utils.*;
 import io.cosmos.msg.utils.type.MsgBeginRedelegateValue;
 import io.cosmos.types.*;
@@ -9,11 +10,11 @@ public class MsgRedelegate extends MsgDelegate {
     public static void main(String[] args) {
         MsgRedelegate msg = new MsgRedelegate();
         msg.setMsgType("cosmos-sdk/MsgBeginRedelegate");
-        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message messages = msg.produceDelegateMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083",
-                "cosmosvaloper1uhfa9260p3xhnac74wgx5er7tpltww78gxeac0",
-                "stake", "100");
+        Message messages = msg.produceDelegateMsg(
+                EnvInstance.getEnv().GetDenom(),
+                "100");
 
         msg.submit(messages,
                 "3",
@@ -21,10 +22,14 @@ public class MsgRedelegate extends MsgDelegate {
                 "Delegate memo");
     }
 
-    protected Message produceDelegateMsg(String validatorSrcAddress,
-                                            String validatorDstAddress,
+    protected Message produceDelegateMsg(
                                             String delegateDenom,
                                             String delegateAmount) {
+
+        MsgRedelegate tmp = new MsgRedelegate();
+        tmp.initMnemonic(EnvInstance.getEnv().GetNode1Mnmonic());
+        String validatorDstAddress = tmp.operAddress;
+        String validatorSrcAddress = this.operAddress;
 
         MsgBeginRedelegateValue delegateValue = new MsgBeginRedelegateValue();
         delegateValue.setValidatorSrcAddress(validatorSrcAddress);

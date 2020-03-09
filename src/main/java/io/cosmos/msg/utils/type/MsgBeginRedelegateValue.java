@@ -12,41 +12,29 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(alphabetic = true)
 public class MsgBeginRedelegateValue {
+    private Token amount;
 
     @JsonProperty("delegator_address")
     @SerializedName("delegator_address")
     private String delegatorAddress;
 
+    @JsonProperty("validator_dst_address")
+    @SerializedName("validator_dst_address")
+    private String validatorDstAddress;
 
     @JsonProperty("validator_src_address")
     @SerializedName("validator_src_address")
     private String validatorSrcAddress;
 
-    @JsonProperty("validator_dst_address")
-    @SerializedName("validator_dst_address")
-    private String validatorDstAddress;
-
-    private Token amount;
-
-    public String getDelegatorAddress() {
-        return delegatorAddress;
-    }
 
     public void setDelegatorAddress(String delegatorAddress) {
         this.delegatorAddress = delegatorAddress;
     }
 
-
-    public String getValidatorSrcAddress() {
-        return validatorSrcAddress;
-    }
     public void setValidatorSrcAddress(String validatorAddress) {
         this.validatorSrcAddress = validatorAddress;
     }
 
-    public String getValidatorDstAddress() {
-        return validatorDstAddress;
-    }
     public void setValidatorDstAddress(String validatorAddress) {
         this.validatorDstAddress = validatorAddress;
     }

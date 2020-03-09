@@ -12,6 +12,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder(alphabetic = true)
 public class MsgDelegateValue {
+    private Token amount;
 
     @JsonProperty("delegator_address")
     @SerializedName("delegator_address")
@@ -21,7 +22,6 @@ public class MsgDelegateValue {
     @SerializedName("validator_address")
     private String validatorAddress;
 
-    private Token amount;
 
     public String getDelegatorAddress() {
         return delegatorAddress;

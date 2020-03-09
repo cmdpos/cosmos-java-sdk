@@ -1,5 +1,6 @@
 package io.cosmos.msg;
 
+import io.cosmos.common.EnvInstance;
 import io.cosmos.msg.utils.Message;
 import io.cosmos.msg.utils.type.MsgSetWithdrawAddrValue;
 import io.cosmos.msg.utils.type.MsgWithdrawDelegatorRewardValue;
@@ -9,9 +10,9 @@ public class MsgWithdrawDelegatorReward extends MsgBase {
     public static void main(String[] args) {
         MsgWithdrawDelegatorReward msg = new MsgWithdrawDelegatorReward();
         msg.setMsgType("cosmos-sdk/MsgWithdrawDelegationReward");
-        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message messages = msg.produceMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083");
+        Message messages = msg.produceMsg();
 
         msg.submit(messages,
                 "6",
@@ -19,8 +20,8 @@ public class MsgWithdrawDelegatorReward extends MsgBase {
                 "cosmos set withdrawAddr");
     }
 
-    public Message produceMsg(String validatorAddr) {
-
+    public Message produceMsg() {
+        String validatorAddr = this.operAddress;
         MsgWithdrawDelegatorRewardValue value = new MsgWithdrawDelegatorRewardValue();
         value.setValidatorAddress(validatorAddr);
         value.setDelegatorAddress(this.address);

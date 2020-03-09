@@ -38,7 +38,7 @@ public class OKEnv extends EnvBase {
 
 
     public String GetNode0Mnmonic() {
-        return "puzzle glide follow cruel say burst deliver wild tragic galaxy lumber offer";
+        return "puzzle glide follow cruel say burst deliver wild tragic galaxy lumber one";
     };
     public String GetNode1Mnmonic() {
         return "palace cube bitter light woman side pave cereal donor bronze twice work";

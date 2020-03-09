@@ -1,5 +1,6 @@
 package io.cosmos.msg;
 
+import io.cosmos.common.EnvInstance;
 import io.cosmos.msg.utils.Message;
 
 public class RunAll {
@@ -36,11 +37,12 @@ public class RunAll {
 
         MsgSend msg = new MsgSend();
         msg.setMsgType("cosmos-sdk/MsgSend");
-        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message messages = msg.produceSendMsg("stake",
-                "16",
-                "cosmos1geyy4wtak2q9effnfhze9u4htd8yxxmagdw3q0");
+        Message messages = msg.produceSendMsg(
+                EnvInstance.getEnv().GetDenom(),
+                EnvInstance.getEnv().GetTransferAmount(),
+                EnvInstance.getEnv().GetNode1Addr());
 
         msg.submit(messages, "6", "200000", "cosmos transfer");
     }
@@ -49,9 +51,9 @@ public class RunAll {
 
         MsgDelegate msg = new MsgDelegate();
         msg.setMsgType("cosmos-sdk/MsgDelegate");
-        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message message = msg.produceDelegateMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083", "stake", "100");
+        Message message = msg.produceDelegateMsg(EnvInstance.getEnv().GetDenom(), "100");
 
         msg.submit(message, "3", "200000", "Delegate memo");
     }
@@ -60,11 +62,10 @@ public class RunAll {
 
         MsgRedelegate msg = new MsgRedelegate();
         msg.setMsgType("cosmos-sdk/MsgBeginRedelegate");
-        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message messages = msg.produceDelegateMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083",
-                "cosmosvaloper1uhfa9260p3xhnac74wgx5er7tpltww78gxeac0",
-                "stake", "100");
+        Message messages = msg.produceDelegateMsg(
+                EnvInstance.getEnv().GetDenom(), "100");
 
         msg.submit(messages,
                 "3",
@@ -76,10 +77,10 @@ public class RunAll {
 
         MsgUnbond msg = new MsgUnbond();
         msg.setMsgType("cosmos-sdk/MsgUndelegate");
-        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message messages = msg.produceDelegateMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083",
-                "stake", "100");
+        Message messages = msg.produceDelegateMsg(
+                EnvInstance.getEnv().GetDenom(), "100");
 
         msg.submit(messages,
                 "3",
@@ -91,9 +92,9 @@ public class RunAll {
 
         MsgSetWithdrawAddress msg = new MsgSetWithdrawAddress();
         msg.setMsgType("cosmos-sdk/MsgModifyWithdrawAddress");
-        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message messages = msg.produceMsg("cosmos1hg40dv5e237qy28vtyum52ygke32ez35hm307h");
+        Message messages = msg.produceMsg();
 
         msg.submit(messages,
                 "6",
@@ -105,9 +106,9 @@ public class RunAll {
 
         MsgWithdrawDelegatorReward msg = new MsgWithdrawDelegatorReward();
         msg.setMsgType("cosmos-sdk/MsgWithdrawDelegationReward");
-        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message messages = msg.produceMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083");
+        Message messages = msg.produceMsg();
 
         msg.submit(messages,
                 "6",
@@ -122,7 +123,7 @@ public class RunAll {
         String mnemonic = "sentence deputy little switch fiction balcony hollow iron net index sound hollow scare attitude only cushion best candy wonder phone napkin sketch announce derive";
         msg.initMnemonic(mnemonic);
 
-        Message messages = msg.produceMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083");
+        Message messages = msg.produceMsg();
 
         msg.submit(messages,
                 "6",

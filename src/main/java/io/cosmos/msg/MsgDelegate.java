@@ -1,5 +1,6 @@
 package io.cosmos.msg;
 
+import io.cosmos.common.EnvInstance;
 import io.cosmos.msg.utils.*;
 import io.cosmos.msg.utils.type.MsgDelegateValue;
 import io.cosmos.types.*;
@@ -10,9 +11,10 @@ public class MsgDelegate extends MsgBase {
     public static void main(String[] args) {
         MsgDelegate msg = new MsgDelegate();
         msg.setMsgType("cosmos-sdk/MsgDelegate");
-        msg.init("2c999c5afe7f0c902846e1b286fed29c5c5914998655d469568560955abe0d5d");
+        msg.initMnemonic(EnvInstance.getEnv().GetNode0Mnmonic());
 
-        Message message = msg.produceDelegateMsg("cosmosvaloper1y5cj26cexle8mrpxfksnly2djzxx79zq2mf083", "stake", "100");
+        Message message = msg.produceDelegateMsg(
+                EnvInstance.getEnv().GetDenom(), "100");
 
         msg.submit(message,
                 "3",
@@ -21,8 +23,9 @@ public class MsgDelegate extends MsgBase {
     }
 
 
-    protected Message produceDelegateMsg(String validatorAddress, String delegateDenom, String delegateAmount) {
+    protected Message produceDelegateMsg(String delegateDenom, String delegateAmount) {
 
+        String validatorAddress = this.operAddress;
         MsgDelegateValue delegateValue = new MsgDelegateValue();
         delegateValue.setValidatorAddress(validatorAddress);
         delegateValue.setDelegatorAddress(address);
