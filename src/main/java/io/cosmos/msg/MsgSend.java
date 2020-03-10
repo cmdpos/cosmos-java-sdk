@@ -21,7 +21,7 @@ public class MsgSend extends MsgBase {
         Message messages = msg.produceSendMsg(
                 EnvInstance.getEnv().GetDenom(),
                 EnvInstance.getEnv().GetTransferAmount(),
-                EnvInstance.getEnv().GetNode1Addr());
+                EnvInstance.getEnv().GetNode5Addr());
 
         msg.submit(messages, "6", "200000", "cosmos transfer!");
     }
