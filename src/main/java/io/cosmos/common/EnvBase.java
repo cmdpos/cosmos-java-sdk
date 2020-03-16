@@ -13,7 +13,7 @@ public class EnvBase {
     }
 
     public String GetRestServerUrl(){
-        return  "http://localhost:10059";
+        return  "http://localhost:10259";
     }
 
     public String GetHDPath(){
@@ -42,23 +42,24 @@ public class EnvBase {
         return "country live width exotic behind mad belt bachelor later outside forget rude pudding material orbit shoot kind curve endless prosper make exotic welcome maple";
     };
 
-    public String GetNode0Addr() {
-        return "eva1hg40dv5e237qy28vtyum52ygke32ez35syykpz";
+    public String GetNode5Mnmonic() {
+        return "clerk universe city game fortune kitchen arrive regret donor wide borrow typical hold harbor actor raise inside truly nation ethics rally layer arena clump";
     };
-//    public String GetNode0ValAddr() {
-//        return "evavaloper1hg40dv5e237qy28vtyum52ygke32ez35xexq98";
-//    };
+
+    public String GetNode5Addr() {
+        return "eva1hxtpykp4x8u99hqkq5mayea5tgdpehcxy4v2k5";
+    };
 
     public String GetNode1Addr() {
         return "eva1geyy4wtak2q9effnfhze9u4htd8yxxma0jmgl6";
     };
     public String GetTransferAmount() {
-        return "16";
+        return "160" + "000000000";
     };
 
 
     public String GetTendermintConsensusPubkey() {
-        return "evavalconspub1zcjduepqma0hc8c48n7gft4d4pngyqykwax754yhrypy0alpgv47ann2schq997lne";
+        return "evavalconspub1zcjduepqc4z8pwqsvdh0pectjzuh5s0jaata266x8cf7ka2styqzkqrmq8qsyzctcg";
     };
 
 
