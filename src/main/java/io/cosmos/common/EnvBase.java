@@ -35,6 +35,10 @@ public class EnvBase {
         return "/txs";
     };
 
+    public String GetFee() {
+        return "10000000000";
+    };
+
     public String GetNode0Mnmonic() {
         return "depart neither they audit pen exile fire smart tongue express blanket burden culture shove curve address together pottery suggest lady sell clap seek whisper";
     };
@@ -50,11 +54,14 @@ public class EnvBase {
         return "eva1hxtpykp4x8u99hqkq5mayea5tgdpehcxy4v2k5";
     };
 
+    public String GetNode0Addr() {
+        return "eva1hg40dv5e237qy28vtyum52ygke32ez35syykpz";
+    };
     public String GetNode1Addr() {
         return "eva1geyy4wtak2q9effnfhze9u4htd8yxxma0jmgl6";
     };
     public String GetTransferAmount() {
-        return "160" + "000000000";
+        return "1" + "000000000";
     };
 
 

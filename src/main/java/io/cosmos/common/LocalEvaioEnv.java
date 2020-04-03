@@ -1,8 +1,6 @@
 package io.cosmos.common;
 
-public class LocalEnv extends EnvBase {
-
-
+public class LocalEvaioEnv extends EnvBase {
     public String GetValidatorAddrPrefix(){
         return  "evavaloper";
     }

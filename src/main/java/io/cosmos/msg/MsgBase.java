@@ -135,7 +135,7 @@ public class MsgBase {
             List<Token> amountList = new ArrayList<>();
             Token amount = new Token();
             amount.setDenom(EnvInstance.getEnv().GetDenom());
-            amount.setAmount(feeAmount);
+            amount.setAmount(EnvInstance.getEnv().GetFee());
             amountList.add(amount);
 
             //组装待签名交易结构
